@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/supabase";
 import { COLORS } from "@/styles/StyleTokens";
 import { useRouter } from "expo-router";
 import { useState } from "react";

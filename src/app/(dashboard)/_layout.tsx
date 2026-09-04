@@ -1,6 +1,6 @@
 // src/app/(dashboard)/_layout.tsx
 import UserMenu from "@/components/UserMenu";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/supabase";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
 import { ChefHat, Truck } from "lucide-react-native";

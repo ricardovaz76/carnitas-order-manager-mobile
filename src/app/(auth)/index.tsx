@@ -1,6 +1,6 @@
 // src/app/index.tsx
 import Field from "@/components/login-components/Field";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase/supabase";
 import { styles } from "@/styles/login-styles/Login.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { useRouter } from "expo-router";
