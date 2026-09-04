@@ -1,6 +1,6 @@
 import { mapOrder } from "@/lib/mappers/mapOrder";
 import { supabase } from "@/lib/supabase/supabase";
-import type { Order } from "@/lib/type";
+import type { Order } from "@/lib/types/ordertypes";
 
 export async function getActiveOrders(): Promise<Order[]> {
   const { data, error } = await supabase

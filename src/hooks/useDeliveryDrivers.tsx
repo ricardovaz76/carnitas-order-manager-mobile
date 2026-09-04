@@ -1,5 +1,5 @@
 "use client";
-import type { DriverMenu } from "@/lib/type";
+import type { DriverMenu } from "@/lib/types/drivertypes";
 import { createContext, useContext, useState } from "react";
 
 interface DeliveryDriversContextValue {

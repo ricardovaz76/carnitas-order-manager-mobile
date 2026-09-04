@@ -2,13 +2,13 @@
 import MobileLayout from "@/components/MobileLayout";
 import { OrdersContext } from "@/hooks/useOrders";
 import type {
-  CustomerInfoRow,
-  OrderItemRow,
-  OrderRow,
+    CustomerInfoRow,
+    OrderItemRow,
+    OrderRow,
 } from "@/lib/mappers/mapOrder";
 import { getOrderById } from "@/lib/queries/orders";
 import { supabase } from "@/lib/supabase/supabase";
-import type { Order } from "@/lib/type";
+import type { Order } from "@/lib/types/ordertypes";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
