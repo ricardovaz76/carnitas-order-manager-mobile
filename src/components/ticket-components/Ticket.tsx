@@ -87,13 +87,15 @@ export default function Ticket({ order }: TicketProps) {
 
   async function handleSaveEdit(updatedItems: OrderItem[]) {
     setShowEditModal(false);
-    const previousItems = order.items;
-    updateOrderFields(order.id, { items: updatedItems });
     try {
-      await saveOrderItems(order.id, previousItems, updatedItems);
+      const savedItems = await saveOrderItems(
+        order.id,
+        order.items,
+        updatedItems,
+      );
+      updateOrderFields(order.id, { items: savedItems });
       showToast("Order changes successfully saved", "success");
     } catch (error) {
-      updateOrderFields(order.id, { items: previousItems });
       showToast(getErrorMessage(error, "Failed to save changes"), "error");
     }
   }

@@ -33,22 +33,22 @@ export async function saveOrderItems(
   orderId: number,
   originalItems: OrderItem[],
   updatedItems: OrderItem[],
-): Promise<void> {
+): Promise<OrderItem[]> {
   const originalIds = new Set(originalItems.map((item) => item.id));
   const updatedIds = new Set(updatedItems.map((item) => item.id));
 
-  // Grabs id of deleted order items
+  // Grabs the order item ids that have been removed
   const removeIds = originalItems
     .filter((item) => !updatedIds.has(item.id))
     .map((item) => item.id);
 
-  // Grabs existing order items that have been updated
+  // Grabs existing order items that have had updates
   const existingItems = updatedItems.filter((item) => originalIds.has(item.id));
 
-  // Grabs new order items
+  // Grabs the new order items
   const newItems = updatedItems.filter((item) => !originalIds.has(item.id));
 
-  // Updates existing order items if changes have been made
+  // Updates any existing order items that have changes
   if (existingItems.length > 0) {
     const { error: upsertError } = await supabase.from("order_items").upsert(
       existingItems.map((item) => ({
@@ -66,24 +66,37 @@ export async function saveOrderItems(
     }
   }
 
-  // Insert the newly created order items
+  let insertedItems: OrderItem[] = [];
+
+  // inserts the new order items and fetches those items to grab the new uuid created by supabase
   if (newItems.length > 0) {
-    const { error: insertError } = await supabase.from("order_items").insert(
-      newItems.map((item) => ({
-        order_id: orderId,
-        item_name: item.item,
-        quantity: item.quantity,
-        toppings: item.toppings,
-      })),
-    );
+    const { data, error: insertError } = await supabase
+      .from("order_items")
+      .insert(
+        newItems.map((item) => ({
+          order_id: orderId,
+          item_name: item.item,
+          quantity: item.quantity,
+          toppings: item.toppings,
+        })),
+      )
+      .select();
 
     if (insertError) {
       console.error("Failed to insert new order items:", insertError);
       throw new Error("Failed to insert order items");
     }
+
+    // save the inserted items for optimistic updates
+    insertedItems = (data ?? []).map((row) => ({
+      id: String(row.id),
+      item: row.item_name,
+      quantity: Number(row.quantity),
+      toppings: row.toppings,
+    }));
   }
 
-  // Remove any order items that have been filtered for deletion
+  // deletes any removed order items from the database
   if (removeIds.length > 0) {
     const { error: deleteError } = await supabase
       .from("order_items")
@@ -95,6 +108,9 @@ export async function saveOrderItems(
       throw new Error("Failed to delete order items");
     }
   }
+
+  // returns the updates order items array for optimistic updating
+  return [...existingItems, ...insertedItems];
 }
 
 export async function updateOrderStatus(
