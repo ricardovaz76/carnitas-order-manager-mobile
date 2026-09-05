@@ -82,6 +82,17 @@ export default function OrdersBoard() {
         { event: "UPDATE", schema: "public", table: "orders" },
         handleUpdate,
       )
+      .on<OrderRow>(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "orders" },
+        (payload) => {
+          if (!("id" in payload.old)) {
+            return;
+          }
+          const deletedId = payload.old.id;
+          setOrders((prev) => prev.filter((order) => order.id !== deletedId));
+        },
+      )
       .on<CustomerInfoRow>(
         "postgres_changes",
         { event: "UPDATE", schema: "public", table: "customer_info" },
@@ -151,6 +162,37 @@ export default function OrdersBoard() {
               ...order,
               items: order.items.filter((item) => item.id !== deletedId),
             })),
+          );
+        },
+      )
+      .on<OrderItemRow>(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "order_items" },
+        (payload) => {
+          if (!("id" in payload.new)) {
+            return;
+          }
+          const updatedRow = payload.new;
+          const updatedId = String(updatedRow.id);
+          setOrders((prev) =>
+            prev.map((order) => {
+              if (order.id !== updatedRow.order_id) {
+                return order;
+              }
+              return {
+                ...order,
+                items: order.items.map((item) =>
+                  item.id === updatedId
+                    ? {
+                        ...item,
+                        item: updatedRow.item_name,
+                        quantity: Number(updatedRow.quantity),
+                        toppings: updatedRow.toppings,
+                      }
+                    : item,
+                ),
+              };
+            }),
           );
         },
       )
