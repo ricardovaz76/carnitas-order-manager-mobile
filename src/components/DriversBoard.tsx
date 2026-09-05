@@ -1,5 +1,6 @@
-import DriverStatusToggle from "@/components/driver-components/DriverStatusToggle";
-import RegisterDriverModal from "@/components/modals/RegisterDriverModal";
+import DriverStatusToggle from "@/components/buttons/DriverStatusToggle";
+import RegisterButton from "@/components/buttons/RegisterButton";
+import RegisterDriverModal from "@/components/modals/RegisterModal";
 import PanelHeader from "@/components/panel-components/PanelHeader";
 import { useToast } from "@/hooks/useToast";
 import {
@@ -14,7 +15,6 @@ import { COLORS } from "@/styles/StyleTokens";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
-import RegisterButton from "./RegisterButton";
 
 export default function DriversBoard() {
   const [drivers, setDrivers] = useState<Driver[]>([]);

@@ -4,7 +4,7 @@ import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
 import { ChefHat, Truck } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function Header({ displayName }: { displayName: string }) {
@@ -13,7 +13,6 @@ function Header({ displayName }: { displayName: string }) {
     <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
       <View style={styles.headerLeft}>
         <ChefHat color={COLORS.new} size={22} />
-        <Text style={styles.headerTitle}>Carnitas Order Manager</Text>
       </View>
       <UserMenu displayName={displayName} />
     </View>
