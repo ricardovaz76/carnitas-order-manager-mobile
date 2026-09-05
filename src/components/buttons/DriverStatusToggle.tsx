@@ -1,6 +1,6 @@
 import { COLORS } from "@/styles/StyleTokens";
 import { StatusTogglestyles } from "@/styles/button-styles/DriverStatusToggle.styles";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Animated, Pressable } from "react-native";
 
 interface DriverStatusToggleProps {
@@ -12,7 +12,7 @@ export default function DriverStatusToggle({
   active,
   onToggle,
 }: DriverStatusToggleProps) {
-  const progress = useRef(new Animated.Value(active ? 1 : 0)).current;
+  const [progress] = useState(() => new Animated.Value(active ? 1 : 0));
 
   useEffect(() => {
     Animated.timing(progress, {
