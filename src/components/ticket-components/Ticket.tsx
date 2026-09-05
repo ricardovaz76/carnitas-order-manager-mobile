@@ -4,7 +4,7 @@ import ConfirmModal from "@/components/modals/ConfirmModal";
 import EditModal from "@/components/modals/EditModal";
 import TicketHeader from "@/components/ticket-components/TicketHeader";
 import TicketItems from "@/components/ticket-components/TicketItems";
-import TicketPerforation from "@/components/ui/TicketPerforation";
+import TicketPerforation from "@/components/ticket-components/ticket-decor/TicketPerforation";
 import { useOrders } from "@/hooks/useOrders";
 import { useToast } from "@/hooks/useToast";
 import {
