@@ -1,0 +1,62 @@
+import { COLORS } from "@/styles/StyleTokens";
+import { StyleSheet } from "react-native";
+
+export const EditModalstyles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(22, 23, 27, 0.6)",
+    zIndex: 10,
+  },
+  box: {
+    alignItems: "center",
+    gap: 12,
+    borderRadius: 8,
+    padding: 20,
+    minWidth: 240,
+    backgroundColor: COLORS.paper,
+  },
+  row: { flexDirection: "row", alignItems: "center", gap: 8, width: "100%" },
+  quantityInput: {
+    width: 56,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: COLORS.paperEdge,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    fontSize: 14,
+    color: COLORS.ink,
+  },
+  textInput: {
+    flex: 1,
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: COLORS.paperEdge,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    fontSize: 14,
+    color: COLORS.ink,
+  },
+  addButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.bgPanelEdge,
+  },
+  pressed: { opacity: 0.7 },
+  buttonRow: { flexDirection: "row", gap: 8, width: "100%", marginTop: 8 },
+  button: {
+    flex: 1,
+    paddingVertical: 8,
+    borderRadius: 4,
+    alignItems: "center",
+  },
+  buttonText: { fontSize: 14, fontWeight: "600" },
+});

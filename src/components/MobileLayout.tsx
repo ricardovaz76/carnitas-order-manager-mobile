@@ -1,5 +1,4 @@
-// src/components/MobileLayout.tsx
-import Panel from "@/components/Panel";
+import Panel from "@/components/panel-components/Panel";
 import PanelTabs from "@/components/panel-components/PanelTabs";
 import {
   groupOrdersByStatus,

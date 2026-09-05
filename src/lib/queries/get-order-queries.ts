@@ -32,18 +32,3 @@ export async function getOrderById(id: number): Promise<Order | null> {
 
   return mapOrder(data);
 }
-
-export async function updateOrderStatus(
-  orderId: number,
-  status: Order["status"],
-): Promise<void> {
-  const { error } = await supabase
-    .from("orders")
-    .update({ order_status: status })
-    .eq("id", orderId);
-
-  if (error) {
-    console.error(`Failed to update order ${orderId} status:`, error);
-    throw new Error("Failed to update order status");
-  }
-}

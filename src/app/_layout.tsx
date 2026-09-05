@@ -1,3 +1,4 @@
+import { ToastProvider } from "@/hooks/useToast";
 import { supabase } from "@/lib/supabase/supabase";
 import type { Session } from "@supabase/supabase-js";
 import { Stack } from "expo-router";
@@ -25,13 +26,19 @@ export default function RootLayout() {
   if (loading) return null; // swap for a splash screen later if you want
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={!session}>
-        <Stack.Screen name="(auth)" />
-      </Stack.Protected>
-      <Stack.Protected guard={!!session}>
-        <Stack.Screen name="(dashboard)" />
-      </Stack.Protected>
-    </Stack>
+    <ToastProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Protected guard={!session}>
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+        <Stack.Protected guard={!!session}>
+          <Stack.Screen name="(dashboard)" />
+        </Stack.Protected>
+      </Stack>
+    </ToastProvider>
   );
 }

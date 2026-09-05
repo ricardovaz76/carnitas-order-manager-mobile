@@ -1,4 +1,3 @@
-// src/app/(dashboard)/_layout.tsx
 import UserMenu from "@/components/UserMenu";
 import { supabase } from "@/lib/supabase/supabase";
 import { COLORS } from "@/styles/StyleTokens";

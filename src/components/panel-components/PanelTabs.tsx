@@ -1,4 +1,3 @@
-// src/components/PanelTabs.tsx
 import { STATUS_PANELS, type GroupedOrders } from "@/lib/grouporders";
 import { COLORS } from "@/styles/StyleTokens";
 import { PanelTabstyles } from "@/styles/panel-styles/PanelTabs.styles";

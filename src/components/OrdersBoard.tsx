@@ -1,20 +1,15 @@
-"use client";
 import MobileLayout from "@/components/MobileLayout";
 import { OrdersContext } from "@/hooks/useOrders";
 import type {
-    CustomerInfoRow,
-    OrderItemRow,
-    OrderRow,
+  CustomerInfoRow,
+  OrderItemRow,
+  OrderRow,
 } from "@/lib/mappers/mapOrder";
-import { getOrderById } from "@/lib/queries/orders";
+import { getActiveOrders, getOrderById } from "@/lib/queries/get-order-queries";
 import { supabase } from "@/lib/supabase/supabase";
 import type { Order } from "@/lib/types/ordertypes";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-
-interface OrdersBoardProps {
-  initialOrders: Order[];
-}
 
 // This function uses a channel from supabase live to create listeners for the following:
 // - INSERT for orders table: used to get new orders that have been submitted
@@ -23,8 +18,17 @@ interface OrdersBoardProps {
 // - INSERT on order_items: used to get new order items inserts from LLM parsing
 // - DELETE on order_items: LLM deletes before re-inserting with new items to ensure it doesn't accidently duplicate order_items when reading full chat history along with new message
 //  The delete listener is meant to ensure the deleted items are also deleted in the array for the specified order id
-export default function OrdersBoard({ initialOrders }: OrdersBoardProps) {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+export default function OrdersBoard() {
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  // This funtion fetches the initial order
+  useEffect(() => {
+    async function loadInitialOrders() {
+      const initial = await getActiveOrders();
+      setOrders(initial);
+    }
+    loadInitialOrders();
+  }, []);
 
   useEffect(() => {
     async function handleInsert(
