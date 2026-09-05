@@ -22,6 +22,8 @@ export default function DriversBoard() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const showToast = useToast();
 
+  // Loads the drivers and current user ID
+  // This was moved here opposed to the driver.tsx because react-native currently doesn't support server components
   useEffect(() => {
     async function loadData() {
       try {
@@ -40,6 +42,9 @@ export default function DriversBoard() {
     void loadData();
   }, []);
 
+  // This function updates the active status for the driver in supabase
+  // and ensures the inactive driver is not being shown in the assign drivers list
+  // when trying to assign a driver an order for delivery
   async function toggleActive(id: string) {
     const target = drivers.find((d) => d.id === id);
     if (!target) {
@@ -63,6 +68,8 @@ export default function DriversBoard() {
     }
   }
 
+  // This function registers the current user with the given phone number
+  // Prevents the user from registering a second time
   async function handleRegister(phone: string) {
     try {
       const newDriver = await registerDriverMutation(currentUserID, phone);

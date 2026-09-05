@@ -2,13 +2,7 @@ import { RegisterModalstyles } from "@/styles/modal-styles/RegisterModal.styles"
 import { COLORS } from "@/styles/StyleTokens";
 import { UserPlus, X } from "lucide-react-native";
 import { useState } from "react";
-import {
-  Modal,
-  Pressable,
-  Text,
-  TextInput,
-  View
-} from "react-native";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
 
 interface RegisterDriverModalProps {
   onClose: () => void;
@@ -27,6 +21,7 @@ export default function RegisterDriverModal({
     setPhoneError(null);
   }
 
+  // This function ensures the input is a 10 digit number before continuing
   function handleSubmit() {
     const trimmed = phone.trim();
     if (!/\d{10}$/.test(trimmed)) {
