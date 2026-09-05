@@ -7,7 +7,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import { Animated, Pressable, Text, View } from "react-native";
@@ -65,7 +64,15 @@ function ToastCard({
   toast: ToastItem;
   onDismiss: (id: number) => void;
 }) {
-  const anim = useRef(new Animated.Value(0)).current;
+  const [anim] = useState(() => new Animated.Value(0));
+
+  useEffect(() => {
+    Animated.timing(anim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [anim]);
 
   useEffect(() => {
     Animated.timing(anim, {

@@ -10,7 +10,7 @@ export default function TicketAdditionalInfo({
 }: TicketAdditionalInfoProps) {
   return (
     <View style={AdditionalInfostyles.container}>
-      <Text style={AdditionalInfostyles.text}>"{info}"</Text>
+      <Text style={AdditionalInfostyles.text}>&quot;{info}&quot;</Text>
     </View>
   );
 }

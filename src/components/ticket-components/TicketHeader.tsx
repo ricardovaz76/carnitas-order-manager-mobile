@@ -13,14 +13,19 @@ interface TicketHeaderProps {
 }
 
 function useElapsedMinutes(firedAt: number): number {
-  const [, tick] = useState(0);
+  const [minutes, setMinutes] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => tick((n) => n + 1), 15000);
-    return () => clearInterval(interval);
-  }, []);
+    function update() {
+      setMinutes(Math.max(0, Math.floor((Date.now() - firedAt) / 60000)));
+    }
 
-  return Math.max(0, Math.floor((Date.now() - firedAt) / 60000));
+    update();
+    const interval = setInterval(update, 15000);
+    return () => clearInterval(interval);
+  }, [firedAt]);
+
+  return minutes;
 }
 
 function urgencyColor(minutes: number): string {
