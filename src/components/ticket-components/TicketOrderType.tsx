@@ -1,12 +1,12 @@
+import DriverAssignMenu from "@/components/driver-components/DriverAssignMenu";
+import { useToast } from "@/hooks/useToast";
+import { assignDriverToOrder } from "@/lib/queries/driver-mutation-queries";
 import { COLORS } from "@/styles/StyleTokens";
 import { OrderTypestyles } from "@/styles/ticket-styles/TicketOrderType.styles";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { MapPin, Phone } from "lucide-react-native";
+import { useState } from "react";
 import { Text, View } from "react-native";
-// import DriverAssignMenu from "@/components/assign-drivers-components/DriverAssignMenu";
-// import { useToast } from "@/hooks/useToast";
-// import { assignDriverToOrder } from "@/lib/queries/driverMutations";
-// import { getErrorMessage } from "@/utils/getErrorMessage";
-// import { useEffect, useState } from "react";
 
 interface TicketOrderTypeProps {
   orderId: number;
@@ -16,31 +16,31 @@ interface TicketOrderTypeProps {
   driverId: string | null;
 }
 
-export default function TicketOrderType({
-  orderType,
-  address,
-  phone,
-}: TicketOrderTypeProps) {
+export default function TicketOrderType({ orderId, orderType, address, phone, driverId, }: TicketOrderTypeProps) {
   const delivery = orderType === "delivery";
 
-  // Driver assignment - re-enable once we get to the drivers page
-  // const [assignDriverId, setAssignDriverId] = useState<string | null>(null);
-  // const showToast = useToast();
+  const [assignDriverId, setAssignDriverId] = useState<string | null>(null);
+  const [prevDriverId, setPrevDriverId] = useState<string | null>(null);
+  const showToast = useToast();
 
-  // useEffect(() => {
-  //   setAssignDriverId(driverId);
-  // }, [driverId]);
+  if (driverId !== prevDriverId) {
+    setPrevDriverId(driverId);
+    setAssignDriverId(driverId);
+  }
 
-  // async function handleAssign(newDriverId: string) {
-  //   const previous = assignDriverId;
-  //   setAssignDriverId(newDriverId);
-  //   try {
-  //     await assignDriverToOrder(orderId, newDriverId);
-  //   } catch (err) {
-  //     setAssignDriverId(previous);
-  //     showToast(getErrorMessage(err, "Failed to assign driver to order"), "error");
-  //   }
-  // }
+  async function handleAssign(newDriverId: string) {
+    const previous = assignDriverId;
+    setAssignDriverId(newDriverId);
+    try {
+      await assignDriverToOrder(orderId, newDriverId);
+    } catch (err) {
+      setAssignDriverId(previous);
+      showToast(
+        getErrorMessage(err, "Failed to assign driver to order"),
+        "error",
+      );
+    }
+  }
 
   return (
     <View>
@@ -59,7 +59,7 @@ export default function TicketOrderType({
               {phone ?? "No phone number given yet"}
             </Text>
           </View>
-          {/* <DriverAssignMenu assignedDriverId={assignDriverId} onAssign={handleAssign} /> */}
+          <DriverAssignMenu assignedDriverId={assignDriverId} onAssign={handleAssign}/>
         </View>
       )}
     </View>

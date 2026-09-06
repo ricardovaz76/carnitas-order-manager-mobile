@@ -1,30 +1,25 @@
-"use client";
-import type { DriverMenu } from "@/lib/types/drivertypes";
+import type { Driver } from "@/lib/types/drivertypes";
 import { createContext, useContext, useState } from "react";
 
 interface DeliveryDriversContextValue {
-  deliveryDrivers: DriverMenu[];
-  setDeliveryDrivers: (drivers: DriverMenu[]) => void;
+  deliveryDrivers: Driver[];
+  setDeliveryDrivers: (drivers: Driver[]) => void;
 }
 
 // TODO: this file should only have the use hook, the provider should be its own component
-const DeliveryDriversContext =
-  createContext<DeliveryDriversContextValue | null>(null);
+const DeliveryDriversContext = createContext<DeliveryDriversContextValue | null>(null);
 
-export function DeliveryDriversProvider({
-  initialDrivers,
-  children,
-}: {
-  initialDrivers: DriverMenu[];
-  children: React.ReactNode;
-}) {
-  const [deliveryDrivers, setDeliveryDrivers] =
-    useState<DriverMenu[]>(initialDrivers);
+export function DeliveryDriversProvider({ initialDrivers, children, }: { initialDrivers: Driver[]; children: React.ReactNode; }) {
+  const [deliveryDrivers, setDeliveryDrivers] = useState<Driver[]>(initialDrivers);
+  const [prevInitialDrivers, setPrevInitialDrivers] = useState<Driver[]>(initialDrivers);
+
+  if (initialDrivers !== prevInitialDrivers) {
+    setPrevInitialDrivers(initialDrivers);
+    setDeliveryDrivers(initialDrivers);
+  }
 
   return (
-    <DeliveryDriversContext.Provider
-      value={{ deliveryDrivers, setDeliveryDrivers }}
-    >
+    <DeliveryDriversContext.Provider value={{ deliveryDrivers, setDeliveryDrivers }}>
       {children}
     </DeliveryDriversContext.Provider>
   );
