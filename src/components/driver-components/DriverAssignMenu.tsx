@@ -1,10 +1,10 @@
+import DriversList from "@/components/driver-components/DriversList";
 import { useDeliveryDrivers } from "@/hooks/useDeliveryDrivers";
 import { DriversAssignMenustyles } from "@/styles/Drivers.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { ChevronDown, Truck } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import DriversList from "./DriversList";
 
 interface DriverAssignMenuProps {
   assignedDriverId: string | null;
@@ -15,9 +15,6 @@ export default function DriverAssignMenu({ assignedDriverId, onAssign, }: Driver
   const [open, setOpen] = useState(false);
   const { deliveryDrivers } = useDeliveryDrivers();
   const assignedDriver = deliveryDrivers.find((d) => d.id === assignedDriverId && d.active);
-  console.log("Driver name:", assignedDriver);
-  console.log("Drivers:", deliveryDrivers);
-  console.log("assignedDriverid", assignedDriverId);
 
   return (
     <View style={DriversAssignMenustyles.container}>
