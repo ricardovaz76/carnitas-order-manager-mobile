@@ -8,10 +8,11 @@ import {
   registerDriver as registerDriverMutation,
   updateDriverAvailability,
 } from "@/lib/queries/driver-mutation-queries";
+import { supabase } from "@/lib/supabase/supabase";
 import { DriversBoardstyles } from "@/styles/Drivers.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { getErrorMessage } from "@/utils/getErrorMessage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 
 export default function DriversBoard() {
@@ -19,6 +20,18 @@ export default function DriversBoard() {
   const [currentUserID, setCurrentUserID] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const showToast = useToast();
+
+  useEffect(() => {
+    async function loadCurrentUser() {
+      const { data: { user }, } = await supabase.auth.getUser();
+      if (!user) {
+        return;
+      }
+      setCurrentUserID(user?.id ?? "");
+    }
+
+    void loadCurrentUser();
+  }, []);
 
   // This function updates the active status for the driver in supabase
   // and ensures the inactive driver is not being shown in the assign drivers list

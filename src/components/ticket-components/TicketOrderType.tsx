@@ -5,7 +5,7 @@ import { COLORS } from "@/styles/StyleTokens";
 import { OrderTypestyles } from "@/styles/ticket-styles/TicketOrderType.styles";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { MapPin, Phone } from "lucide-react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Text, View } from "react-native";
 
 interface TicketOrderTypeProps {
@@ -16,21 +16,17 @@ interface TicketOrderTypeProps {
   driverId: string | null;
 }
 
-export default function TicketOrderType({
-  orderId,
-  orderType,
-  address,
-  phone,
-  driverId,
-}: TicketOrderTypeProps) {
+export default function TicketOrderType({ orderId, orderType, address, phone, driverId, }: TicketOrderTypeProps) {
   const delivery = orderType === "delivery";
 
   const [assignDriverId, setAssignDriverId] = useState<string | null>(null);
+  const [prevDriverId, setPrevDriverId] = useState<string | null>(null);
   const showToast = useToast();
 
-  useEffect(() => {
+  if (driverId !== prevDriverId) {
+    setPrevDriverId(driverId);
     setAssignDriverId(driverId);
-  }, [driverId]);
+  }
 
   async function handleAssign(newDriverId: string) {
     const previous = assignDriverId;
@@ -63,10 +59,7 @@ export default function TicketOrderType({
               {phone ?? "No phone number given yet"}
             </Text>
           </View>
-          <DriverAssignMenu
-            assignedDriverId={assignDriverId}
-            onAssign={handleAssign}
-          />
+          <DriverAssignMenu assignedDriverId={assignDriverId} onAssign={handleAssign}/>
         </View>
       )}
     </View>

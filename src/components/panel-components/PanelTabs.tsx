@@ -14,7 +14,7 @@ export default function PanelTabs({
   activeTab,
   onSelect,
 }: PanelTabsProps) {
-  const tabs = Object.keys(STATUS_PANELS) as Array<keyof GroupedOrders>;
+  const tabs = Object.keys(STATUS_PANELS) as (keyof GroupedOrders)[];
 
   return (
     <View style={PanelTabstyles.container}>
@@ -35,12 +35,7 @@ export default function PanelTabs({
               },
             ]}
           >
-            <Text
-              style={[
-                PanelTabstyles.tabLabel,
-                { color: isActive ? panel.color : COLORS.inkFaint },
-              ]}
-            >
+            <Text style={[ PanelTabstyles.tabLabel, { color: isActive ? panel.color : COLORS.inkFaint }, ]}>
               {panel.tabTitle}
             </Text>
             <View
@@ -53,12 +48,7 @@ export default function PanelTabs({
                 },
               ]}
             >
-              <Text
-                style={[
-                  PanelTabstyles.badgeText,
-                  { color: isActive ? panel.color : COLORS.inkFaint },
-                ]}
-              >
+              <Text style={[ PanelTabstyles.badgeText, { color: isActive ? panel.color : COLORS.inkFaint }, ]}>
                 {count}
               </Text>
             </View>

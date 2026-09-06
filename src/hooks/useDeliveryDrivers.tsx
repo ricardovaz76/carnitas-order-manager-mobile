@@ -1,5 +1,5 @@
 import type { Driver } from "@/lib/types/drivertypes";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface DeliveryDriversContextValue {
   deliveryDrivers: Driver[];
@@ -10,12 +10,13 @@ interface DeliveryDriversContextValue {
 const DeliveryDriversContext = createContext<DeliveryDriversContextValue | null>(null);
 
 export function DeliveryDriversProvider({ initialDrivers, children, }: { initialDrivers: Driver[]; children: React.ReactNode; }) {
-  const [deliveryDrivers, setDeliveryDrivers] =
-    useState<Driver[]>(initialDrivers);
+  const [deliveryDrivers, setDeliveryDrivers] = useState<Driver[]>(initialDrivers);
+  const [prevInitialDrivers, setPrevInitialDrivers] = useState<Driver[]>(initialDrivers);
 
-  useEffect(() => {
+  if (initialDrivers !== prevInitialDrivers) {
+    setPrevInitialDrivers(initialDrivers);
     setDeliveryDrivers(initialDrivers);
-  }, [initialDrivers]);
+  }
 
   return (
     <DeliveryDriversContext.Provider value={{ deliveryDrivers, setDeliveryDrivers }}>
