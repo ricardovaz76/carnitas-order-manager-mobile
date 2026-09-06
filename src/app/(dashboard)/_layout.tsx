@@ -1,5 +1,8 @@
 import UserMenu from "@/components/UserMenu";
+import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
+import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
 import { supabase } from "@/lib/supabase/supabase";
+import { Driver } from "@/lib/types/drivertypes";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
 import { ChefHat, Truck } from "lucide-react-native";
@@ -21,56 +24,59 @@ function Header({ displayName }: { displayName: string }) {
 
 export default function DashboardLayout() {
   const [displayName, setDisplayName] = useState("");
+  const [drivers, setDrivers] = useState<Driver[]>([]);
 
+  // Grabs the current user's display name for the layout header
   useEffect(() => {
     async function loadUser() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
+      const { data: { user }, } = await supabase.auth.getUser();
+      if (!user) {
+        return;
+      } 
+
       const { data } = await supabase
         .from("users")
         .select("display_name")
         .eq("id", user.id)
         .single();
+
       setDisplayName(data?.display_name ?? "");
     }
     loadUser();
   }, []);
 
-  return (
-    <Tabs
-      screenOptions={{
-        header: () => <Header displayName={displayName} />,
-        tabBarActiveTintColor: COLORS.new,
-        tabBarInactiveTintColor: COLORS.inkFaint,
-        tabBarStyle: {
-          borderTopWidth: 1,
-          borderTopColor: COLORS.bgPanelEdge,
-          backgroundColor: COLORS.bgPanel,
-        },
-        tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: "700",
-          textTransform: "uppercase",
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Dashboard",
-          tabBarIcon: ({ color }) => <ChefHat size={18} color={color} />,
+  // Fetches the list of delivery drivers from the database and sets them in state
+  useEffect(() => {
+    async function  loadDrivers() {
+      const driverData = await getDeliveryDrivers();
+      setDrivers(driverData);
+    }
+    loadDrivers();
+  }, []);
+
+   return (
+    <DeliveryDriversProvider initialDrivers={drivers}>
+      <Tabs
+        screenOptions={{
+          header: () => <Header displayName={displayName} />,
+          tabBarActiveTintColor: COLORS.new,
+          tabBarInactiveTintColor: COLORS.inkFaint,
+          tabBarStyle: {
+            borderTopWidth: 1,
+            borderTopColor: COLORS.bgPanelEdge,
+            backgroundColor: COLORS.bgPanel,
+          },
+          tabBarLabelStyle: {
+            fontSize: 11,
+            fontWeight: "700",
+            textTransform: "uppercase",
+          },
         }}
-      />
-      <Tabs.Screen
-        name="drivers"
-        options={{
-          title: "Drivers",
-          tabBarIcon: ({ color }) => <Truck size={18} color={color} />,
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen name="index" options={{ title: "Dashboard", tabBarIcon: ({ color }) => <ChefHat size={18} color={color} />, }}/>
+        <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
+      </Tabs>
+    </DeliveryDriversProvider>
   );
 }
 

@@ -15,6 +15,8 @@ export async function updateDriverAvailability(
     console.error(`Failed to update driver ${driverId} availability:`, error);
     throw new Error("Failed to update driver availability");
   }
+
+  console.log(`Driver-${driverId} status:`, active);
 }
 
 export async function registerDriver(

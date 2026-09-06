@@ -11,13 +11,13 @@ interface DriverAssignMenuProps {
   onAssign: (driverId: string) => void;
 }
 
-export default function DriverAssignMenu({
-  assignedDriverId,
-  onAssign,
-}: DriverAssignMenuProps) {
+export default function DriverAssignMenu({ assignedDriverId, onAssign, }: DriverAssignMenuProps) {
   const [open, setOpen] = useState(false);
   const { deliveryDrivers } = useDeliveryDrivers();
-  const assignedDriver = deliveryDrivers.find((d) => d.id === assignedDriverId);
+  const assignedDriver = deliveryDrivers.find((d) => d.id === assignedDriverId && d.active);
+  console.log("Driver name:", assignedDriver);
+  console.log("Drivers:", deliveryDrivers);
+  console.log("assignedDriverid", assignedDriverId);
 
   return (
     <View style={DriversAssignMenustyles.container}>
@@ -31,10 +31,7 @@ export default function DriverAssignMenu({
           pressed && DriversAssignMenustyles.buttonPressed,
         ]}
       >
-        <Truck
-          size={13}
-          color={assignedDriver ? COLORS.paper : COLORS.cooking}
-        />
+        <Truck size={13} color={assignedDriver ? COLORS.paper : COLORS.cooking} />
         <Text
           style={
             assignedDriver
@@ -44,18 +41,11 @@ export default function DriverAssignMenu({
         >
           {assignedDriver ? assignedDriver.name.split(" ")[0] : "Assign driver"}
         </Text>
-        <ChevronDown
-          size={12}
-          color={assignedDriver ? COLORS.paper : COLORS.cooking}
-        />
+        <ChevronDown size={12} color={assignedDriver ? COLORS.paper : COLORS.cooking}/>
       </Pressable>
 
       {open && (
-        <DriversList
-          assignedDriverId={assignedDriverId}
-          onAssign={onAssign}
-          setOpen={setOpen}
-        />
+        <DriversList assignedDriverId={assignedDriverId} onAssign={onAssign} setOpen={setOpen}/>
       )}
     </View>
   );
