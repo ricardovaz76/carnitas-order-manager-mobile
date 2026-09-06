@@ -1,21 +1,27 @@
 import OrdersBoard from "@/components/OrdersBoard";
+import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
+import { getActiveDrivers } from "@/lib/queries/get-delivery-drivers-queries";
+import type { DriverMenu } from "@/lib/types/drivertypes";
 import { COLORS } from "@/styles/StyleTokens";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
-// import { getActiveDrivers } from "@/lib/queries/deliveryDrivers";
-// import { DeliveryDriversProvider } from "@/hooks/useDrivers";
 
 export default function DashboardScreen() {
-  // Driver data - re-enable once we get to the drivers page
-  // const [drivers, setDrivers] = useState<Driver[]>([]);
-  // useEffect(() => {
-  //   getActiveDrivers().then(setDrivers);
-  // }, []);
+  const [drivers, setDrivers] = useState<DriverMenu[]>([]);
 
-  // add DeliveryDriversProvider
+  useEffect(() => {
+    async function loadDrivers() {
+      const initialDriversData = await getActiveDrivers();
+      setDrivers(initialDriversData);
+    }
+    void loadDrivers();
+  }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.bgDeep }}>
-      <OrdersBoard />
-    </View>
+    <DeliveryDriversProvider initialDrivers={drivers}>
+      <View style={{ flex: 1, backgroundColor: COLORS.bgDeep }}>
+        <OrdersBoard />
+      </View>
+    </DeliveryDriversProvider>
   );
 }

@@ -1,6 +1,5 @@
-"use client";
 import type { DriverMenu } from "@/lib/types/drivertypes";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface DeliveryDriversContextValue {
   deliveryDrivers: DriverMenu[];
@@ -20,6 +19,10 @@ export function DeliveryDriversProvider({
 }) {
   const [deliveryDrivers, setDeliveryDrivers] =
     useState<DriverMenu[]>(initialDrivers);
+
+  useEffect(() => {
+    setDeliveryDrivers(initialDrivers);
+  }, []);
 
   return (
     <DeliveryDriversContext.Provider
