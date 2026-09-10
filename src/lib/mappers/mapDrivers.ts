@@ -1,8 +1,7 @@
 import type { Database } from "@/lib/supabase/database.types";
 import type { Driver, DriverMenu } from "@/lib/types/drivertypes";
 
-type DeliveryDriversRow =
-  Database["public"]["Tables"]["delivery_drivers"]["Row"];
+type DeliveryDriversRow = Database["public"]["Tables"]["delivery_drivers"]["Row"];
 type UserRows = Database["public"]["Tables"]["users"]["Row"];
 
 export interface DeliveryDriverWithUser extends DeliveryDriversRow {
