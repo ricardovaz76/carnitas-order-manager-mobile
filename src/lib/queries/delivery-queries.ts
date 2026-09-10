@@ -16,8 +16,9 @@ export async function getMyDeliveries(userId: string): Promise<DeliveryInfo[]> {
 
   const { data: deliveryData, error: deliveryError } = await supabase
     .from("customer_info")
-    .select("id, customer_address, customer_phone, order_id")
-    .eq("driver_id", driverData.id);
+    .select("id, customer_address, customer_phone, order_id, orders!inner(active_status)")
+    .eq("driver_id", driverData.id)
+    .eq("orders.active_status", "active");
 
     if (deliveryError) {
       console.error("Failed to fetch customer info:", deliveryError);

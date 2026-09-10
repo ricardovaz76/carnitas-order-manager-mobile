@@ -16,7 +16,7 @@ export default function CopyButton({ value, label }: CopyButtonProps) {
   async function handleCopy() {
     try {
       await Clipboard.setStringAsync(value);
-    } catch (error) {
+    } catch {
       // clipboard unavailable so do nothing
     }
     setCopied(true)
