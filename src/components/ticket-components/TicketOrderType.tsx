@@ -3,7 +3,7 @@ import DriverAssignMenu from "@/components/driver-components/DriverAssignMenu";
 import { useToast } from "@/hooks/useToast";
 import { assignDriverToOrder } from "@/lib/queries/driver-mutation-queries";
 import { COLORS } from "@/styles/StyleTokens";
-import { OrderTypestyles } from "@/styles/ticket-styles/TicketOrderType.styles";
+import { OrderTypestyles } from "@/styles/Ticket.styles";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { MapPin, Phone } from "lucide-react-native";
 import { useState } from "react";

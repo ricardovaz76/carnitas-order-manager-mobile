@@ -15,7 +15,7 @@ import {
 } from "@/lib/queries/order-mutation-queries";
 import type { Order, OrderItem } from "@/lib/types/ordertypes";
 import { COLORS } from "@/styles/StyleTokens";
-import { Ticketstyles } from "@/styles/ticket-styles/Ticket.styles";
+import { Ticketstyles } from "@/styles/Ticket.styles";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { orderStatus, statusColor } from "@/utils/statusUtils";
 import { useState } from "react";

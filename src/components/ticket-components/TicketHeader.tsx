@@ -1,6 +1,6 @@
 import TicketOrderType from "@/components/ticket-components/TicketOrderType";
 import { COLORS } from "@/styles/StyleTokens";
-import { TicketHeaderstyles } from "@/styles/ticket-styles/TicketHeader.styles";
+import { TicketHeaderstyles } from "@/styles/Ticket.styles";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
