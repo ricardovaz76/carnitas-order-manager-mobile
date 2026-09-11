@@ -16,22 +16,66 @@ export default function DeliveryBoard() {
  const showToast = useToast();
 
   useEffect(() => {
+  let channel: ReturnType<typeof supabase.channel> | null = null;
+
+  async function init() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return;
+    }
+
+    const { data: driverData, error: driverError } = await supabase
+      .from("delivery_drivers")
+      .select("id")
+      .eq("user_id", user.id)
+      .single();
+
+    if (driverError || !driverData) {
+      return;
+    }
+
     async function loadDeliveries() {
-      const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
         return;
       }
-      const rows = await getMyDeliveries(user.id);
+      const rows = await getMyDeliveries(driverData?.id);
       setDeliveries(rows);
     }
-    void loadDeliveries();
-  }, []);
+
+    await loadDeliveries();
+
+    channel = supabase
+      .channel("driver-deliveries")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "customer_info",
+          filter: `driver_id=eq.${driverData.id}`,
+        },
+        () => { void loadDeliveries(); }
+      )
+      .subscribe();
+  }
+
+  void init();
+
+  return () => {
+    if (channel) {
+      supabase.removeChannel(channel);
+    }
+  };
+}, []);
 
   async function handleComplete(Id: number) {
     try {
       const wasCompleted = await completeOrder(Id);
       if (!wasCompleted) {
         showToast("Order isn't ready to complete yet", "error");
+      }
+      else {
+        setDeliveries((prev) => prev.filter((delivery) => delivery.orderId !== Id))
       }
     } catch (error) {
       showToast(getErrorMessage(error, "Failed to complete order"), "error");
