@@ -1,4 +1,4 @@
-import { AdditionalInfostyles } from "@/styles/ticket-styles/TicketAdditionalInfo.styles";
+import { AdditionalInfostyles } from "@/styles/Ticket.styles";
 import { Text, View } from "react-native";
 
 interface TicketAdditionalInfoProps {

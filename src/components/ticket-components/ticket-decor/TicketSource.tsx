@@ -1,5 +1,5 @@
 import { COLORS } from "@/styles/StyleTokens";
-import { Sourcestyles } from "@/styles/ticket-styles/TicketDecor.styles";
+import { Sourcestyles } from "@/styles/Ticket.styles";
 import { MessageCircle } from "lucide-react-native";
 import { Text, View } from "react-native";
 

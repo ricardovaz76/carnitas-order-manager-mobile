@@ -1,5 +1,5 @@
 import { COLORS } from "@/styles/StyleTokens";
-import { Perforationstyles } from "@/styles/ticket-styles/TicketDecor.styles";
+import { Perforationstyles } from "@/styles/Ticket.styles";
 import { useState } from "react";
 import { View, type LayoutChangeEvent } from "react-native";
 import Svg, { Circle, Rect } from "react-native-svg";

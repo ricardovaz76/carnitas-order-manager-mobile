@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase/supabase";
 import { Driver } from "@/lib/types/drivertypes";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
-import { ChefHat, Truck } from "lucide-react-native";
+import { ChefHat, Navigation, Truck } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -74,6 +74,7 @@ export default function DashboardLayout() {
         }}
       >
         <Tabs.Screen name="index" options={{ title: "Dashboard", tabBarIcon: ({ color }) => <ChefHat size={18} color={color} />, }}/>
+        <Tabs.Screen name= "delivery" options={{ title: "Delivery", tabBarIcon: ({ color }) => <Navigation size={18} color={color}/>, }} />
         <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
       </Tabs>
     </DeliveryDriversProvider>
