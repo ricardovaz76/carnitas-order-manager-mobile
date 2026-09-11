@@ -1,8 +1,8 @@
 import { mapDeliveries } from "@/lib/mappers/mapDeliveries";
 import { supabase } from "@/lib/supabase/supabase";
-import type { DeliveryInfo } from "@/lib/types/delivertypes";
+import type { Delivery } from "@/lib/types/delivertypes";
 
-export async function getMyDeliveries(driverId: string): Promise<DeliveryInfo[]> {
+export async function getMyDeliveries(driverId: string): Promise<Delivery[]> {
   const { data: deliveryData, error: deliveryError } = await supabase
     .from("customer_info")
     .select("id, customer_address, customer_phone, order_id, orders!inner(active_status)")
