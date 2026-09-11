@@ -39,13 +39,17 @@ export default function DeliveryBoard() {
         return;
       }
       const rows = await getMyDeliveries(driverData?.id);
+      console.log("current:", deliveries);
+      console.log("queried:", rows);
+
       setDeliveries(rows);
+      console.log("new current:", deliveries);
     }
 
     await loadDeliveries();
 
     channel = supabase
-      .channel("driver-deliveries")
+      .channel(`driver-${driverData.id}`)
       .on(
         "postgres_changes",
         {
@@ -54,6 +58,14 @@ export default function DeliveryBoard() {
           table: "customer_info",
           filter: `driver_id=eq.${driverData.id}`,
         },
+        () => { void loadDeliveries(); }
+      )
+      // a broadcast receiver that receives broadcasts from src/lib/queries/driver-mutation-queries.ts
+      // This lets the channel know that the order has be reassigned to another driver which requires another
+      // loadDeliveries() invokation to remove the reassigned delivery order
+      .on(
+        "broadcast",
+        { event: "delivery_removed" },
         () => { void loadDeliveries(); }
       )
       .subscribe();
