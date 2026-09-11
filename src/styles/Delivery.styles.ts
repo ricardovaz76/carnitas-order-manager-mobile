@@ -11,3 +11,18 @@ export const Deliverystyles = StyleSheet.create({
     borderColor: COLORS.bgPanelEdge,
   },
 });
+
+export const DeliveryHeaderstyles = StyleSheet.create({
+  wrapper: {
+    paddingBottom: 8,
+    marginBottom: 8,
+    borderBottomWidth: 1.5,
+    borderStyle: "dashed",
+    borderBottomColor: COLORS.inkFaint,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+  },
+});

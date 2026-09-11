@@ -3,7 +3,7 @@ import { useToast } from "@/hooks/useToast";
 import { getMyDeliveries } from "@/lib/queries/delivery-queries";
 import { completeOrder } from "@/lib/queries/order-mutation-queries";
 import { supabase } from "@/lib/supabase/supabase";
-import { type DeliveryInfo } from "@/lib/types/delivertypes";
+import { type Delivery } from "@/lib/types/delivertypes";
 import { Deliverystyles } from "@/styles/Delivery.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { getErrorMessage } from "@/utils/getErrorMessage";
@@ -12,7 +12,7 @@ import { View } from "react-native";
 import DeliveryTicket from "./delivery-components/DeliveryTicket";
 
 export default function DeliveryBoard() {
- const [deliveries, setDeliveries] = useState<DeliveryInfo[]>([]);
+ const [deliveries, setDeliveries] = useState<Delivery[]>([]);
  const showToast = useToast();
 
   useEffect(() => {
@@ -39,11 +39,7 @@ export default function DeliveryBoard() {
         return;
       }
       const rows = await getMyDeliveries(driverData?.id);
-      console.log("current:", deliveries);
-      console.log("queried:", rows);
-
       setDeliveries(rows);
-      console.log("new current:", deliveries);
     }
 
     await loadDeliveries();

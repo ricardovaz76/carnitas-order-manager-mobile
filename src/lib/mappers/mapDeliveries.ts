@@ -1,5 +1,5 @@
 import type { Database } from "@/lib/supabase/database.types";
-import type { DeliveryInfo } from "@/lib/types/delivertypes";
+import type { Delivery } from "@/lib/types/delivertypes";
 
 export type CustomerInfoRow = Database["public"]["Tables"]["customer_info"]["Row"];
 type DeliveryCustomerInfoRow = Pick<
@@ -8,7 +8,7 @@ type DeliveryCustomerInfoRow = Pick<
 >;
 
 
-export function mapDeliveries(row: DeliveryCustomerInfoRow): DeliveryInfo {
+export function mapDeliveries(row: DeliveryCustomerInfoRow): Delivery {
   return {
     id: row.id,
     address: row.customer_address ?? null,
