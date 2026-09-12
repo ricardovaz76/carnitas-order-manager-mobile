@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: COLORS.bgPanelEdge,
   },
-  menuItemLabel: { fontSize: 12, color: COLORS.paper },
-  menuItemDisabled: { fontSize: 12, color: COLORS.inkFaint },
+  menuItemLabel: { fontSize: 12, color: COLORS.paper, fontWeight: 700 },
+  menuItemDisabled: { fontSize: 12, color: COLORS.inkFaint, fontWeight: 700 },
   menuItemBorder: { borderTopWidth: 1, borderTopColor: COLORS.bgPanelEdge },
-  menuItemDanger: { fontSize: 13, fontWeight: "600", color: COLORS.urgent },
+  menuItemDanger: { fontSize: 13, fontWeight: 700, color: COLORS.urgent },
 });
