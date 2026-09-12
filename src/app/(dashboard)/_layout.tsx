@@ -1,5 +1,6 @@
 import UserMenu from "@/components/UserMenu";
 import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
+import { registerForPushNotifications } from "@/lib/notifications/registerForPushNotifications";
 import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
 import { supabase } from "@/lib/supabase/supabase";
 import { Driver } from "@/lib/types/drivertypes";
@@ -25,6 +26,11 @@ function Header({ displayName }: { displayName: string }) {
 export default function DashboardLayout() {
   const [displayName, setDisplayName] = useState("");
   const [drivers, setDrivers] = useState<Driver[]>([]);
+
+  // registers user for notifications (if they have not yet registered then a request will be made for permission)
+  useEffect(() => {
+    void registerForPushNotifications();
+  }, []);
 
   // Grabs the current user's display name for the layout header
   useEffect(() => {
