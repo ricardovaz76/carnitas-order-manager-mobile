@@ -1,5 +1,5 @@
+import { RegisterButtonstyles } from "@/styles/Buttons.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { RegisterButtonstyles } from "@/styles/button-styles/RegisterButton";
 import { UserPlus } from "lucide-react-native";
 import { Pressable, Text, View } from "react-native";
 

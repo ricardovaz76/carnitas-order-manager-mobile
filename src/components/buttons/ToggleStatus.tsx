@@ -1,5 +1,5 @@
+import { ToggleStatusstyles } from "@/styles/Buttons.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { StatusTogglestyles } from "@/styles/button-styles/DriverStatusToggle.styles";
 import { useEffect, useState } from "react";
 import { Animated, Pressable } from "react-native";
 
@@ -8,10 +8,7 @@ interface DriverStatusToggleProps {
   onToggle: () => void;
 }
 
-export default function DriverStatusToggle({
-  active,
-  onToggle,
-}: DriverStatusToggleProps) {
+export default function ToggleStatus({ active, onToggle,}: DriverStatusToggleProps) {
   const [progress] = useState(() => new Animated.Value(active ? 1 : 0));
 
   useEffect(() => {
@@ -28,10 +25,10 @@ export default function DriverStatusToggle({
   });
 
   return (
-    <Pressable
+    <Pressable 
       onPress={onToggle}
       style={[
-        StatusTogglestyles.track,
+        ToggleStatusstyles.track,
         {
           backgroundColor: active ? COLORS.ready : COLORS.bgPanelEdge,
           borderColor: active ? COLORS.ready : COLORS.bgPanelEdge,
@@ -40,7 +37,7 @@ export default function DriverStatusToggle({
     >
       <Animated.View
         style={[
-          StatusTogglestyles.thumb,
+          ToggleStatusstyles.thumb,
           { backgroundColor: COLORS.paper, transform: [{ translateX }] },
         ]}
       />

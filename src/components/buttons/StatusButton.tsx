@@ -1,4 +1,4 @@
-import { StatusButtonstyles } from "@/styles/button-styles/StatusButton.styles";
+import { StatusButtonstyles } from "@/styles/Buttons.styles";
 import { Pressable, Text } from "react-native";
 
 interface TicketStatusButtonProps {
