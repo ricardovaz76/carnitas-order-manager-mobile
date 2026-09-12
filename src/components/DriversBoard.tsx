@@ -1,5 +1,5 @@
-import DriverStatusToggle from "@/components/buttons/DriverStatusToggle";
 import RegisterButton from "@/components/buttons/RegisterButton";
+import ToggleStatus from "@/components/buttons/ToggleStatus";
 import RegisterDriverModal from "@/components/modals/RegisterModal";
 import PanelHeader from "@/components/panel-components/PanelHeader";
 import { useDeliveryDrivers } from "@/hooks/useDeliveryDrivers";
@@ -82,7 +82,7 @@ export default function DriversBoard() {
               <Text style={[DriversBoardstyles.cell, DriversBoardstyles.nameCol, DriversBoardstyles.nameText, { color: COLORS.paper }]}>{d.name}</Text>
               <Text style={[DriversBoardstyles.cell, DriversBoardstyles.phoneCol, { color: COLORS.inkFaint }]}>{d.phone}</Text>
               <View style={[DriversBoardstyles.cell, DriversBoardstyles.activeCol]}>
-                <DriverStatusToggle active={d.active} onToggle={() => void toggleActive(d.id)} />
+                <ToggleStatus active={d.active} onToggle={() => void toggleActive(d.id)} />
               </View>
             </View>
           ))}
