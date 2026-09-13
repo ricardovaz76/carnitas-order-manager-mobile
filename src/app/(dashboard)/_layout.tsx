@@ -38,9 +38,14 @@ export default function DashboardLayout() {
   // 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextState) => {
+      console.log("[AppState] change:", appState.current, "->", nextState);
       const cameToForeground = appState.current.match(/inactive|background/) && nextState === "active";
       if (cameToForeground) {
-        setResumeSignal((prev) => prev+1);
+        console.log("[AppState] resumed from background, incrementing resumeSignal");
+        setResumeSignal((prev) => {
+          console.log("[AppState] resumeSignal:", prev, "->", prev+1);
+          return prev+1;
+        });
       }
 
       appState.current = nextState;

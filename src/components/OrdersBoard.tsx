@@ -25,12 +25,13 @@ export default function OrdersBoard() {
 
   // This funtion fetches the initial order
   useEffect(() => {
+    console.log("[AppState]: resumeSignal", resumeSignal);
     async function loadInitialOrders() {
       const initial = await getActiveOrders();
       setOrders(initial);
     }
     loadInitialOrders();
-  }, []);
+  }, [resumeSignal]);
 
   useEffect(() => {
     async function handleInsert(
@@ -205,7 +206,7 @@ export default function OrdersBoard() {
         console.error("Failed to remove channel:", error);
       });
     };
-  }, [resumeSignal]);
+  }, []);
 
   function updateOrderFields(orderId: number, updates: Partial<Order>) {
     setOrders((prev) =>
