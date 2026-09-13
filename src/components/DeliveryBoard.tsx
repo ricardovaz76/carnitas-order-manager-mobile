@@ -66,8 +66,10 @@ export default function DeliveryBoard() {
 
   // Resuming app state fetches the data
   useEffect(() => {
-    if (!driverId) return;
-    void loadDeliveries(driverId);
+    if (!driverId) {
+      return;
+    }
+    getMyDeliveries(driverId).then(setDeliveries);
   }, [resumeSignal]);
 
   async function handleComplete(Id: number) {
