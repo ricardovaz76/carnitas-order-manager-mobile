@@ -9,6 +9,7 @@
     "expo": "~57.0.19",
     "expo-clipboard": "~57.0.1",
     "expo-constants": "~57.0.18",
+    "expo-dev-client": "~57.0.19",
     "expo-device": "~57.0.2",
     "expo-font": "~57.0.3",
     "expo-glass-effect": "~57.0.1",
@@ -20,6 +21,7 @@
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.2",
     "expo-system-ui": "~57.0.3",
+    "expo-updates": "~57.0.22",
     "expo-web-browser": "~57.0.2",
     "lucide-react-native": "^1.40.0",
     "react": "19.2.3",
@@ -44,8 +46,8 @@
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint"
   },
