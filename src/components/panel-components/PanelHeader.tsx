@@ -1,4 +1,4 @@
-import { PanelHeaderstyles } from "@/styles/panel-styles/PanelHeader.styles";
+import { PanelHeaderstyles } from "@/styles/Panel.styles";
 import { Text, View } from "react-native";
 
 interface PanelHeaderProps {

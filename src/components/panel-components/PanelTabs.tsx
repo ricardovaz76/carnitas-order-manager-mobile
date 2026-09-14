@@ -1,6 +1,6 @@
 import { STATUS_PANELS, type GroupedOrders } from "@/lib/grouporders";
+import { PanelTabstyles } from "@/styles/Panel.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { PanelTabstyles } from "@/styles/panel-styles/PanelTabs.styles";
 import { Pressable, Text, View } from "react-native";
 
 interface PanelTabsProps {

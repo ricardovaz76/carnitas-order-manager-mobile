@@ -29,24 +29,23 @@ function useElapsedMinutes(firedAt: number): number {
 }
 
 function urgencyColor(minutes: number): string {
-  if (minutes >= 10) return COLORS.urgent;
-  if (minutes >= 5) return COLORS.new;
+  if (minutes >= 10) { 
+    return COLORS.urgent; 
+  }
+  if (minutes >= 5) {
+    return COLORS.new;
+  }
+  
   return COLORS.ready;
 }
 
-export default function TicketHeader({
-  orderId,
-  orderType,
-  firedAt,
-  customerInfo,
-  driverId,
-}: TicketHeaderProps) {
+export default function TicketHeader({ orderId, orderType, firedAt, customerInfo, driverId, }: TicketHeaderProps) {
   const minutes = useElapsedMinutes(firedAt);
   const badgeColor = urgencyColor(minutes);
 
   return (
     <View style={TicketHeaderstyles.container}>
-      <View>
+      <View style={TicketHeaderstyles.conent}>
         <Text style={TicketHeaderstyles.orderId}>#{orderId}</Text>
         <TicketOrderType
           orderId={orderId}

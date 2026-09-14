@@ -33,9 +33,9 @@ export const OrderTypestyles = StyleSheet.create({
     color: COLORS.ink,
   },
   deliveryInfo: { marginTop: 4, gap: 2 },
-  infoRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  infoText: { fontSize: 12, color: COLORS.customerInfoInk },
-  DeliveryInfoText: { fontSize: 16, fontWeight: 600, textDecorationLine: "underline" },
+  infoRow: { flexDirection: "row", alignItems: "flex-start", gap: 6 },
+  infoText: { fontSize: 12, color: COLORS.customerInfoInk, flexShrink: 1, maxWidth: "90%" },
+  DeliveryInfoText: { fontSize: 16, fontWeight: 600, textDecorationLine: "underline", flexShrink: 1 },
   mono: { fontFamily: FONTS.mono },
 });
 
@@ -55,6 +55,7 @@ export const TicketHeaderstyles = StyleSheet.create({
     borderStyle: "dashed",
     borderBottomColor: COLORS.inkFaint,
   },
+  conent: { flex: 1 },
   orderId: {
     fontFamily: FONTS.mono,
     fontSize: 20,
