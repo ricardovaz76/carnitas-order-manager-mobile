@@ -1,5 +1,5 @@
+import { TicketActionsButtonsstyles } from "@/styles/Buttons.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { TicketActionsButtonsstyles } from "@/styles/button-styles/TicketActionsButtons.styles";
 import { Pressable, Text, View } from "react-native";
 
 interface TicketActionsProps {

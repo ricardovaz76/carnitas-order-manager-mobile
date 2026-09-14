@@ -1,4 +1,5 @@
 import MobileLayout from "@/components/MobileLayout";
+import { useAppResume } from "@/hooks/useAppResume";
 import { OrdersContext } from "@/hooks/useOrders";
 import type {
   CustomerInfoRow,
@@ -20,15 +21,17 @@ import { useEffect, useState } from "react";
 //  The delete listener is meant to ensure the deleted items are also deleted in the array for the specified order id
 export default function OrdersBoard() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const resumeSignal = useAppResume();
 
   // This funtion fetches the initial order
   useEffect(() => {
+    console.log("[AppState]: resumeSignal", resumeSignal);
     async function loadInitialOrders() {
       const initial = await getActiveOrders();
       setOrders(initial);
     }
     loadInitialOrders();
-  }, []);
+  }, [resumeSignal]);
 
   useEffect(() => {
     async function handleInsert(

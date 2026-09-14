@@ -9,11 +9,7 @@ interface PanelTabsProps {
   onSelect: (tab: keyof GroupedOrders) => void;
 }
 
-export default function PanelTabs({
-  grouped,
-  activeTab,
-  onSelect,
-}: PanelTabsProps) {
+export default function PanelTabs({ grouped, activeTab, onSelect, }: PanelTabsProps) {
   const tabs = Object.keys(STATUS_PANELS) as (keyof GroupedOrders)[];
 
   return (

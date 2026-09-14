@@ -17,11 +17,9 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
-    },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "googleServicesFile": "./google-services.json",
+      "predictiveBackGestureEnabled": false,
+      "package": "com.mendicantbias.carnitasordermanagermobile"
     },
     "plugins": [
       "expo-router",
@@ -37,6 +35,19 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3fc1eb94-2c8d-4e7a-9e59-5748a0f31033"
+      }
+    },
+    "owner": "mendicantbias",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3fc1eb94-2c8d-4e7a-9e59-5748a0f31033"
     }
   }
 }

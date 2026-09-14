@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "189491623407",
+    "project_id": "order-manager-notificati-6625e",
+    "storage_bucket": "order-manager-notificati-6625e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189491623407:android:db2c96560d3b35f865721a",
+        "android_client_info": {
+          "package_name": "com.mendicantbias.carnitasordermanagermobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCorqTebGoSg8X6VUn9ytQFgKotH3psF1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

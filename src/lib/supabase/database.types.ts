@@ -226,18 +226,53 @@ export type Database = {
           },
         ]
       }
+      push_token: {
+        Row: {
+          expo_push_token: string
+          id: string
+          platform: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          expo_push_token: string
+          id?: string
+          platform?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          expo_push_token?: string
+          id?: string
+          platform?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "push_token_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       users: {
         Row: {
           display_name: string
           id: string
+          new_order_notifications_enabled: boolean
         }
         Insert: {
           display_name: string
           id: string
+          new_order_notifications_enabled?: boolean
         }
         Update: {
           display_name?: string
           id?: string
+          new_order_notifications_enabled?: boolean
         }
         Relationships: []
       }

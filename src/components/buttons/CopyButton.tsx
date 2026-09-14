@@ -1,4 +1,4 @@
-import { CopyButtonstyles } from "@/styles/button-styles/CopyButton.styles";
+import { CopyButtonstyles } from "@/styles/Buttons.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import * as Clipboard from "expo-clipboard";
 import { Check, Copy } from "lucide-react-native";
