@@ -3,8 +3,8 @@ import { useDeliveryDrivers } from "@/hooks/useDeliveryDrivers";
 import { DriversAssignMenustyles } from "@/styles/Drivers.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { ChevronDown, Truck } from "lucide-react-native";
-import { useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Animated, Easing, Pressable, Text, View } from "react-native";
 
 interface DriverAssignMenuProps {
   assignedDriverId: string | null;
@@ -15,6 +15,21 @@ export default function DriverAssignMenu({ assignedDriverId, onAssign, }: Driver
   const [open, setOpen] = useState(false);
   const { deliveryDrivers } = useDeliveryDrivers();
   const assignedDriver = deliveryDrivers.find((d) => d.id === assignedDriverId && d.active);
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(rotateAnim, {
+      toValue: open ? 1 : 0,
+      duration: 200,
+      easing: Easing.out(Easing.quad),
+      useNativeDriver: true,
+    }).start();
+  }, [open])
+
+  const rotate = rotateAnim.interpolate({
+    inputRange: [0,1],
+    outputRange: ["0deg", "180deg"],
+  });
 
   return (
     <View style={DriversAssignMenustyles.container}>
@@ -38,7 +53,9 @@ export default function DriverAssignMenu({ assignedDriverId, onAssign, }: Driver
         >
           {assignedDriver ? assignedDriver.name.split(" ")[0] : "Assign driver"}
         </Text>
-        <ChevronDown size={12} color={assignedDriver ? COLORS.paper : COLORS.cooking}/>
+        <Animated.View style={{ transform: [{ rotate }] }}>
+          <ChevronDown size={12} color={assignedDriver ? COLORS.paper : COLORS.cooking}/>
+        </Animated.View>
       </Pressable>
 
       {open && (
