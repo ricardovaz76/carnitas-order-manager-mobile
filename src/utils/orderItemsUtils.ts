@@ -1,4 +1,4 @@
-import type { OrderItem } from "@/lib/types/ordertypes";
+import type { OrderItem } from "@/lib/types";
 
 export function updateItemQuantity(
   items: OrderItem[],

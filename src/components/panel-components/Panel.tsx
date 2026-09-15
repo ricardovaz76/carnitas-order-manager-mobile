@@ -1,6 +1,6 @@
 import PanelHeader from "@/components/panel-components/PanelHeader";
 import PanelItems from "@/components/panel-components/PanelItems";
-import type { Order } from "@/lib/types/ordertypes";
+import type { Order } from "@/lib/types";
 import { Panelstyles } from "@/styles/Panel.styles";
 import { View } from "react-native";
 

@@ -1,6 +1,6 @@
 import TicketAdditionalInfo from "@/components/ticket-components/TicketAdditionalInfo";
 import TicketSource from "@/components/ticket-components/ticket-decor/TicketSource";
-import { type OrderItem, Pounds } from "@/lib/types/ordertypes";
+import { type OrderItem, Pounds } from "@/lib/types";
 import { TicketItemsstyles } from "@/styles/Ticket.styles";
 import { Text, View } from "react-native";
 

@@ -1,4 +1,3 @@
-// src/hooks/useToast.tsx
 import { COLORS } from "@/styles/StyleTokens";
 import { Toaststyles } from "@/styles/Toast.styles";
 import { CheckCircle2, X, XCircle } from "lucide-react-native";

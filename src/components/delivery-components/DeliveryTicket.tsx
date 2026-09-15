@@ -1,7 +1,7 @@
 import DeliveryInfo from "@/components/delivery-components/DeliveryInfo";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import TicketPerforation from "@/components/ticket-components/ticket-decor/TicketPerforation";
-import type { Delivery } from "@/lib/types/delivertypes";
+import type { Delivery } from "@/lib/types";
 import { DeliveryHeaderstyles } from "@/styles/Delivery.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { CompleteButtonstyles, TicketHeaderstyles, Ticketstyles } from "@/styles/Ticket.styles";

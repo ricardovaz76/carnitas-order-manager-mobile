@@ -1,5 +1,5 @@
 // src/components/modals/TicketEditModal.tsx
-import type { OrderItem } from "@/lib/types/ordertypes";
+import type { OrderItem } from "@/lib/types";
 import { EditModalstyles } from "@/styles/Modal.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import {

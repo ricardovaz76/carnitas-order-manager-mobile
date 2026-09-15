@@ -8,7 +8,7 @@ import type {
 } from "@/lib/mappers/mapOrder";
 import { getActiveOrders, getOrderById } from "@/lib/queries/get-order-queries";
 import { supabase } from "@/lib/supabase/supabase";
-import type { Order } from "@/lib/types/ordertypes";
+import type { Order } from "@/lib/types";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 

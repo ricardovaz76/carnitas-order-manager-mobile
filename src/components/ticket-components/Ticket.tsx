@@ -13,7 +13,7 @@ import {
   saveOrderItems,
   updateOrderStatus,
 } from "@/lib/queries/order-mutation-queries";
-import type { Order, OrderItem } from "@/lib/types/ordertypes";
+import type { Order, OrderItem } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 import { Ticketstyles } from "@/styles/Ticket.styles";
 import { getErrorMessage } from "@/utils/getErrorMessage";

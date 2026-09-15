@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase/supabase";
-import type { Order, OrderItem } from "@/lib/types/ordertypes";
+import type { Order, OrderItem } from "@/lib/types";
 
 export async function completeOrder(orderId: number): Promise<boolean> {
   const { data, error } = await supabase

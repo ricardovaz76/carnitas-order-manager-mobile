@@ -1,5 +1,5 @@
 import Ticket from "@/components/ticket-components/Ticket";
-import type { Order } from "@/lib/types/ordertypes";
+import type { Order } from "@/lib/types";
 import { PanelItemsstyles } from "@/styles/Panel.styles";
 import { FlatList, Text, View } from "react-native";
 

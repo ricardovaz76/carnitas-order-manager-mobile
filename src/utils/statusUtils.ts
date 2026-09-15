@@ -1,4 +1,4 @@
-import { type Status } from "@/lib/types/ordertypes";
+import { type Status } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 
 export const orderStatus: Record<Status, string> = {

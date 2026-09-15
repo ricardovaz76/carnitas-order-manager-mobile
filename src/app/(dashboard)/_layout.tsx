@@ -4,7 +4,7 @@ import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
 import { registerForPushNotifications } from "@/lib/notifications/registerForPushNotifications";
 import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
 import { supabase } from "@/lib/supabase/supabase";
-import { Driver } from "@/lib/types/drivertypes";
+import { Driver } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
 import { ChefHat, Navigation, ReceiptText, Truck } from "lucide-react-native";
