@@ -29,6 +29,7 @@ export default function DashboardLayout() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [resumeSignal, setResumeSignal] = useState(0);
   const appState = useRef<AppStateStatus>(AppState.currentState);
+  const insets = useSafeAreaInsets();
 
   // registers user for notifications (if they have not yet registered then a request will be made for permission)
   useEffect(() => {
@@ -93,6 +94,9 @@ export default function DashboardLayout() {
               borderTopWidth: 1,
               borderTopColor: COLORS.bgPanelEdge,
               backgroundColor: COLORS.bgPanel,
+              height: 67 + insets.bottom,
+              paddingBottom: insets.bottom,
+              paddingTop: 8
             },
             tabBarLabelStyle: {
               fontSize: 11,
