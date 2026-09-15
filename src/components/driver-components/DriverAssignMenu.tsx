@@ -30,13 +30,7 @@ export default function DriverAssignMenu({ assignedDriverId, onAssign, }: Driver
         ]}
       >
         <Truck size={13} color={assignedDriver ? COLORS.paper : COLORS.cooking} />
-        <Text
-          style={
-            assignedDriver
-              ? DriversAssignMenustyles.labelAssigned
-              : DriversAssignMenustyles.labelUnassigned
-          }
-        >
+        <Text style={ assignedDriver ? DriversAssignMenustyles.labelAssigned : DriversAssignMenustyles.labelUnassigned}>
           {assignedDriver ? assignedDriver.name.split(" ")[0] : "Assign driver"}
         </Text>
         <RotatingChevron open={open} size={12} color={assignedDriver ? COLORS.paper: COLORS.cooking}/>
