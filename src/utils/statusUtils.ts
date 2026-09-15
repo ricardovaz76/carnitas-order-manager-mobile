@@ -4,7 +4,7 @@ import { COLORS } from "@/styles/StyleTokens";
 export const orderStatus: Record<Status, string> = {
   new: "Start Cooking",
   in_progress: "Mark Ready",
-  ready: "Mark as Complete",
+  ready: "Mark Complete",
 };
 
 export const statusColor: Record<Status, string> = {

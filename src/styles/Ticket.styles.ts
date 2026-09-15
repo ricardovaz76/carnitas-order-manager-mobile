@@ -106,21 +106,3 @@ export const AdditionalInfostyles = StyleSheet.create({
   },
   text: { fontSize: 12, fontStyle: "italic", color: COLORS.additionalInfoText },
 });
-
-export const CompleteButtonstyles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    paddingVertical: 10,
-    borderRadius: 4,
-    backgroundColor: COLORS.ready,
-    marginTop: 8,
-  },
-  text: {
-    color: COLORS.bgDeep,
-    fontWeight: "600",
-    fontSize: 14,
-  },
-});

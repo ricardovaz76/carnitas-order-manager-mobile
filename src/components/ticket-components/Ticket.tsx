@@ -116,7 +116,8 @@ export default function Ticket({ order }: TicketProps) {
           additionalInfo={order.additionalInfo}
         />
         <StatusButton
-          status={orderStatus[order.status]}
+          status={order.status}
+          statusLabel={orderStatus[order.status]}
           statusColor={statusColor[order.status]}
           onAdvance={handleAdvanceClick}
         />

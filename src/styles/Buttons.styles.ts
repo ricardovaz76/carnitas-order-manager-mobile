@@ -51,13 +51,16 @@ export const RegisterButtonstyles = StyleSheet.create({
 
 export const StatusButtonstyles = StyleSheet.create({
   button: {
+    flexDirection: "row",
     width: "100%",
     borderRadius: 4,
     paddingVertical: 8,
     alignItems: "center",
+    justifyContent: "center",
+    gap: 6
   },
   pressed: { opacity: 0.8 },
-  label: { fontWeight: "600", fontSize: 14, color: COLORS.bgDeep },
+  label: { fontWeight: "600", fontSize: 14, color: COLORS.paper },
 });
 
 export const TicketActionsButtonsstyles = StyleSheet.create({
@@ -70,4 +73,22 @@ export const TicketActionsButtonsstyles = StyleSheet.create({
   button: { borderRadius: 4, paddingHorizontal: 12, paddingVertical: 6 },
   pressed: { opacity: 0.7 },
   label: { fontSize: 12, fontWeight: "600" },
+});
+
+export const CompleteButtonstyles = StyleSheet.create({
+  button: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    paddingVertical: 10,
+    borderRadius: 4,
+    backgroundColor: COLORS.ready,
+    marginTop: 8,
+  },
+  text: {
+    color: COLORS.paper,
+    fontWeight: "600",
+    fontSize: 14,
+  },
 });
