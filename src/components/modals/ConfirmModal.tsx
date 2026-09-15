@@ -1,5 +1,5 @@
+import { ConfirmModalstyles } from "@/styles/Modal.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { ConfirmModalstyles } from "@/styles/modal-styles/ConfirmModal.styles";
 import { Pressable, Text, View } from "react-native";
 
 interface TicketConfirmModalProps {

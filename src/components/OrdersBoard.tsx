@@ -25,7 +25,6 @@ export default function OrdersBoard() {
 
   // This funtion fetches the initial order
   useEffect(() => {
-    console.log("[AppState]: resumeSignal", resumeSignal);
     async function loadInitialOrders() {
       const initial = await getActiveOrders();
       setOrders(initial);
@@ -208,6 +207,7 @@ export default function OrdersBoard() {
     };
   }, []);
 
+  // Optimistic updates to order status
   function updateOrderFields(orderId: number, updates: Partial<Order>) {
     setOrders((prev) =>
       prev.map((order) =>

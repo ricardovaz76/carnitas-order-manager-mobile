@@ -1,4 +1,4 @@
-import { fieldStyles } from "@/styles/login-styles/Field.styles";
+import { Fieldstyles } from "@/styles/Login.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import type { LucideIcon } from "lucide-react-native";
 import { useState } from "react";
@@ -24,11 +24,11 @@ export default function Field({
   const [focused, setFocused] = useState(false);
 
   return (
-    <View style={fieldStyles.container}>
-      <View style={fieldStyles.labelRow}>
-        <Text style={fieldStyles.asterisk}>*</Text>
+    <View style={Fieldstyles.container}>
+      <View style={Fieldstyles.labelRow}>
+        <Text style={Fieldstyles.asterisk}>*</Text>
         <Icon size={12} color={COLORS.inkFaint} />
-        <Text style={fieldStyles.label}>{label}</Text>
+        <Text style={Fieldstyles.label}>{label}</Text>
       </View>
       <TextInput
         value={value}
@@ -40,7 +40,7 @@ export default function Field({
         autoCorrect={false}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        style={[fieldStyles.input, focused && fieldStyles.inputFocused]}
+        style={[Fieldstyles.input, focused && Fieldstyles.inputFocused]}
       />
     </View>
   );

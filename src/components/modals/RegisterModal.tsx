@@ -1,4 +1,4 @@
-import { RegisterModalstyles } from "@/styles/modal-styles/RegisterModal.styles";
+import { RegisterModalstyles } from "@/styles/Modal.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { UserPlus, X } from "lucide-react-native";
 import { useState } from "react";

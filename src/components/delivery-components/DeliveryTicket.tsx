@@ -35,7 +35,6 @@ export default function DeliveryQueueCard({ delivery, onRequestComplete }: Deliv
             <Text style={TicketHeaderstyles.orderId}>#{delivery.orderId}</Text>
           </View>
           <DeliveryInfo address={delivery.address} phone={delivery.phone} openMap={openInMaps}/>
-          {/* TODO: total price goes here once the backend calculates it */}
         </View>
 
         <Pressable
