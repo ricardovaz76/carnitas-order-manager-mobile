@@ -60,7 +60,9 @@ export default function DeliveryBoard() {
     void init();
 
     return () => {
-      if (channel) supabase.removeChannel(channel);
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
     };
   }, []);
 
