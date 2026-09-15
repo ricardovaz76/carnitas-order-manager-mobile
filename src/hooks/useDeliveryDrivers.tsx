@@ -1,4 +1,4 @@
-import type { Driver } from "@/lib/types/drivertypes";
+import type { Driver } from "@/lib/types";
 import { createContext, useContext, useState } from "react";
 
 interface DeliveryDriversContextValue {

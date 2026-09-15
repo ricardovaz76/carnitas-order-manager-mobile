@@ -1,6 +1,6 @@
 import { mapDeliveries } from "@/lib/mappers/mapDeliveries";
 import { supabase } from "@/lib/supabase/supabase";
-import type { Delivery } from "@/lib/types/delivertypes";
+import type { Delivery } from "@/lib/types";
 
 export async function getMyDeliveries(driverId: string): Promise<Delivery[]> {
   const { data: deliveryData, error: deliveryError } = await supabase

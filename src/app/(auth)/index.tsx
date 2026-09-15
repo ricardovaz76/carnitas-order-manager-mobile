@@ -1,7 +1,7 @@
 // src/app/index.tsx
 import Field from "@/components/login-components/Field";
 import { supabase } from "@/lib/supabase/supabase";
-import { styles } from "@/styles/login-styles/Login.styles";
+import { Loginstyles } from "@/styles/Login.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { useRouter } from "expo-router";
 import { Lock, LogIn, User } from "lucide-react-native";
@@ -38,16 +38,16 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.screen}
+      style={Loginstyles.screen}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
     >
-      <View style={styles.card}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Carnitas Order Manager</Text>
+      <View style={Loginstyles.card}>
+        <View style={Loginstyles.header}>
+          <Text style={Loginstyles.headerText}>Carnitas Order Manager</Text>
         </View>
 
-        <View style={styles.form}>
-          <Text style={styles.requiredText}>
+        <View style={Loginstyles.form}>
+          <Text style={Loginstyles.requiredText}>
             *{" "}
             {invalidLogin
               ? "Invalid Username or Password"
@@ -70,18 +70,18 @@ export default function LoginScreen() {
             Icon={Lock}
           />
 
-          <View style={styles.divider} />
+          <View style={Loginstyles.divider} />
 
-          <View style={styles.buttonRow}>
+          <View style={Loginstyles.buttonRow}>
             <Pressable
               onPress={handleSubmit}
               style={({ pressed }) => [
-                styles.button,
-                pressed && styles.buttonPressed,
+                Loginstyles.button,
+                pressed && Loginstyles.buttonPressed,
               ]}
             >
               <LogIn size={16} color={COLORS.bgDeep} />
-              <Text style={styles.buttonText}>Login</Text>
+              <Text style={Loginstyles.buttonText}>Login</Text>
             </Pressable>
           </View>
         </View>

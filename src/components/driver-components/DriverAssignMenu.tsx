@@ -1,8 +1,9 @@
 import DriversList from "@/components/driver-components/DriversList";
+import { RotatingChevron } from "@/components/RotatingChevron";
 import { useDeliveryDrivers } from "@/hooks/useDeliveryDrivers";
 import { DriversAssignMenustyles } from "@/styles/Drivers.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { ChevronDown, Truck } from "lucide-react-native";
+import { Truck } from "lucide-react-native";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
@@ -29,16 +30,10 @@ export default function DriverAssignMenu({ assignedDriverId, onAssign, }: Driver
         ]}
       >
         <Truck size={13} color={assignedDriver ? COLORS.paper : COLORS.cooking} />
-        <Text
-          style={
-            assignedDriver
-              ? DriversAssignMenustyles.labelAssigned
-              : DriversAssignMenustyles.labelUnassigned
-          }
-        >
+        <Text style={ assignedDriver ? DriversAssignMenustyles.labelAssigned : DriversAssignMenustyles.labelUnassigned}>
           {assignedDriver ? assignedDriver.name.split(" ")[0] : "Assign driver"}
         </Text>
-        <ChevronDown size={12} color={assignedDriver ? COLORS.paper : COLORS.cooking}/>
+        <RotatingChevron open={open} size={12} color={assignedDriver ? COLORS.paper: COLORS.cooking}/>
       </Pressable>
 
       {open && (

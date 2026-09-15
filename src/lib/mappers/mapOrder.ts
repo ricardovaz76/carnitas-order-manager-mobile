@@ -1,10 +1,4 @@
-import type { Database } from "@/lib/supabase/database.types";
-import type { Order, OrderItem } from "@/lib/types/ordertypes";
-
-export type OrderRow = Database["public"]["Tables"]["orders"]["Row"];
-export type OrderItemRow = Database["public"]["Tables"]["order_items"]["Row"];
-export type CustomerInfoRow =
-  Database["public"]["Tables"]["customer_info"]["Row"];
+import type { CustomerInfoRow, Order, OrderItem, OrderItemRow, OrderRow } from "@/lib/types";
 
 export interface OrderWithItems extends OrderRow {
   order_items: OrderItemRow[];

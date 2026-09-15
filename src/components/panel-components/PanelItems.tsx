@@ -1,29 +1,25 @@
 import Ticket from "@/components/ticket-components/Ticket";
-import type { Order } from "@/lib/types/ordertypes";
-import { PanelItemsstyles } from "@/styles/panel-styles/PanelItems.styles";
-import { ScrollView, Text, View } from "react-native";
+import type { Order } from "@/lib/types";
+import { PanelItemsstyles } from "@/styles/Panel.styles";
+import { FlatList, Text, View } from "react-native";
 
 interface PanelItemsProps {
   orders: Order[];
 }
 
 export default function PanelItems({ orders }: PanelItemsProps) {
-  if (orders.length <= 0) {
-    return (
-      <View style={PanelItemsstyles.empty}>
-        <Text style={PanelItemsstyles.emptyText}>Nothing here right now</Text>
-      </View>
-    );
-  }
-
   return (
-    <ScrollView
+    <FlatList
+      data={orders}
+      keyExtractor={(order) => order.id.toString()}
+      renderItem={({ item }) => <Ticket order={item} />}
       contentContainerStyle={PanelItemsstyles.list}
       showsVerticalScrollIndicator={false}
-    >
-      {orders.map((order) => (
-        <Ticket key={order.id} order={order} />
-      ))}
-    </ScrollView>
+      ListEmptyComponent={
+        <View style={PanelItemsstyles.empty}>
+          <Text style={PanelItemsstyles.emptyText}>No active orders</Text>
+        </View>
+      }
+    />
   );
 }

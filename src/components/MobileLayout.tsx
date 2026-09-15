@@ -4,8 +4,8 @@ import {
   groupOrdersByStatus,
   STATUS_PANELS,
   type GroupedOrders,
-} from "@/lib/grouporders";
-import type { Order } from "@/lib/types/ordertypes";
+} from "@/lib/mappers/grouporders";
+import type { Order } from "@/lib/types";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 

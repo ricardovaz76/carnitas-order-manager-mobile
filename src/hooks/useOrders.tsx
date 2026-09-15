@@ -1,5 +1,4 @@
-"use client";
-import type { Order } from "@/lib/types/ordertypes";
+import type { Order } from "@/lib/types";
 import { createContext, useContext } from "react";
 
 interface OrdersContextProps {

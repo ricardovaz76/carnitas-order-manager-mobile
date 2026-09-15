@@ -5,7 +5,7 @@ import { useToast } from "@/hooks/useToast";
 import { getMyDeliveries } from "@/lib/queries/delivery-queries";
 import { completeOrder } from "@/lib/queries/order-mutation-queries";
 import { supabase } from "@/lib/supabase/supabase";
-import { type Delivery } from "@/lib/types/delivertypes";
+import { type Delivery } from "@/lib/types";
 import { Deliverystyles } from "@/styles/Delivery.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { getErrorMessage } from "@/utils/getErrorMessage";
@@ -60,7 +60,9 @@ export default function DeliveryBoard() {
     void init();
 
     return () => {
-      if (channel) supabase.removeChannel(channel);
+      if (channel) {
+        supabase.removeChannel(channel);
+      }
     };
   }, []);
 

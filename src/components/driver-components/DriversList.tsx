@@ -18,7 +18,6 @@ export default function DriversList({ assignedDriverId, onAssign, setOpen, }: Dr
   function handleAssignDriver(id: string) {
     onAssign(id);
     setOpen(false);
-    // send info to driver
   }
 
   return (

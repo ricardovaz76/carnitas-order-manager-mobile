@@ -33,9 +33,9 @@ export const OrderTypestyles = StyleSheet.create({
     color: COLORS.ink,
   },
   deliveryInfo: { marginTop: 4, gap: 2 },
-  infoRow: { flexDirection: "row", alignItems: "center", gap: 6 },
-  infoText: { fontSize: 12, color: COLORS.customerInfoInk },
-  DeliveryInfoText: { fontSize: 16, fontWeight: 600, textDecorationLine: "underline" },
+  infoRow: { flexDirection: "row", alignItems: "flex-start", gap: 6 },
+  infoText: { fontSize: 12, color: COLORS.customerInfoInk, flexShrink: 1, maxWidth: "90%" },
+  DeliveryInfoText: { fontSize: 16, fontWeight: 600, textDecorationLine: "underline", flexShrink: 1, maxWidth: "85%" },
   mono: { fontFamily: FONTS.mono },
 });
 
@@ -55,6 +55,7 @@ export const TicketHeaderstyles = StyleSheet.create({
     borderStyle: "dashed",
     borderBottomColor: COLORS.inkFaint,
   },
+  conent: { flex: 1 },
   orderId: {
     fontFamily: FONTS.mono,
     fontSize: 20,
@@ -104,22 +105,4 @@ export const AdditionalInfostyles = StyleSheet.create({
     backgroundColor: COLORS.bgAdditionalInfo,
   },
   text: { fontSize: 12, fontStyle: "italic", color: COLORS.additionalInfoText },
-});
-
-export const CompleteButtonstyles = StyleSheet.create({
-  button: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    paddingVertical: 10,
-    borderRadius: 4,
-    backgroundColor: COLORS.ready,
-    marginTop: 8,
-  },
-  text: {
-    color: COLORS.bgDeep,
-    fontWeight: "600",
-    fontSize: 14,
-  },
 });

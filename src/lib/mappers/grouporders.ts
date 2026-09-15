@@ -1,4 +1,4 @@
-import type { Order } from "@/lib/types/ordertypes";
+import type { Order } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 
 export interface GroupedOrders {

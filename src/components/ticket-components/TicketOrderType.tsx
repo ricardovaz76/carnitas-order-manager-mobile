@@ -50,9 +50,9 @@ export default function TicketOrderType({ orderId, orderType, address, phone, dr
         <View style={OrderTypestyles.deliveryInfo}>
           <View style={OrderTypestyles.infoRow}>
             <MapPin size={11} color={COLORS.customerInfoInk} />
-            <Text style={OrderTypestyles.infoText}>
-              {address ?? "No address given yet"}
-            </Text>
+              <Text style={OrderTypestyles.infoText}>
+                {address ?? "No address given yet"}
+              </Text>
             {address && (<CopyButton value={address} label="address"/>)}
           </View>
           <View style={OrderTypestyles.infoRow}>
@@ -60,7 +60,7 @@ export default function TicketOrderType({ orderId, orderType, address, phone, dr
             <Text style={[OrderTypestyles.infoText, OrderTypestyles.mono]}>
               {phone ?? "No phone number given yet"}
             </Text>
-            {phone && (<CopyButton value={phone} label="address"/>)}
+            {phone && (<CopyButton value={phone} label="phone"/>)}
           </View>
           <DriverAssignMenu assignedDriverId={assignDriverId} onAssign={handleAssign}/>
         </View>

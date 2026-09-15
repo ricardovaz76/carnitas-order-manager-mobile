@@ -1,6 +1,6 @@
 import { mapDriver } from "@/lib/mappers/mapDrivers";
 import { supabase } from "@/lib/supabase/supabase";
-import type { Driver } from "@/lib/types/drivertypes";
+import type { Driver } from "@/lib/types";
 
 export async function updateDriverAvailability( driverId: string, active: boolean,): Promise<void> {
   const { error } = await supabase

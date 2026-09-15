@@ -1,4 +1,5 @@
 import ToggleStatus from "@/components/buttons/ToggleStatus";
+import { RotatingChevron } from "@/components/RotatingChevron";
 import { useToast } from "@/hooks/useToast";
 import { getNotificationPreference, updateNotificationPreference } from "@/lib/queries/notification-query";
 import { supabase } from "@/lib/supabase/supabase";
@@ -69,8 +70,9 @@ export default function UserMenu({ displayName }: UserMenuProps) {
 
   return (
     <>
-      <Pressable onPress={() => setOpen(true)}>
-        <Text style={styles.trigger}>{displayName}</Text>
+      <Pressable onPress={() => setOpen(true)} style={styles.trigger}>
+        <Text style={styles.triggerText}>{displayName}</Text>
+        <RotatingChevron open={open} size={14} color={COLORS.paper}/>
       </Pressable>
 
       <Modal
@@ -104,11 +106,12 @@ export default function UserMenu({ displayName }: UserMenuProps) {
 }
 
 const styles = StyleSheet.create({
-  trigger: { fontSize: 14, fontWeight: "600", color: COLORS.paper },
+  trigger: { flexDirection: "row", alignItems: "center", gap: 4},
+  triggerText: { fontSize: 14, fontWeight: "600", color: COLORS.paper },
   backdrop: { flex: 1, backgroundColor: "transparent" },
   menu: {
     position: "absolute",
-    top: 60,
+    top: 85,
     right: 20,
     width: 176,
     borderRadius: 8,

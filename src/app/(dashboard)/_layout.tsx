@@ -4,10 +4,10 @@ import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
 import { registerForPushNotifications } from "@/lib/notifications/registerForPushNotifications";
 import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
 import { supabase } from "@/lib/supabase/supabase";
-import { Driver } from "@/lib/types/drivertypes";
+import { Driver } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
-import { ChefHat, Navigation, Truck } from "lucide-react-native";
+import { ChefHat, Navigation, ReceiptText, Truck } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
 import { AppState, AppStateStatus, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -29,6 +29,7 @@ export default function DashboardLayout() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [resumeSignal, setResumeSignal] = useState(0);
   const appState = useRef<AppStateStatus>(AppState.currentState);
+  const insets = useSafeAreaInsets();
 
   // registers user for notifications (if they have not yet registered then a request will be made for permission)
   useEffect(() => {
@@ -38,14 +39,9 @@ export default function DashboardLayout() {
   // 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextState) => {
-      console.log("[AppState] change:", appState.current, "->", nextState);
       const cameToForeground = appState.current.match(/inactive|background/) && nextState === "active";
       if (cameToForeground) {
-        console.log("[AppState] resumed from background, incrementing resumeSignal");
-        setResumeSignal((prev) => {
-          console.log("[AppState] resumeSignal:", prev, "->", prev+1);
-          return prev+1;
-        });
+        setResumeSignal((prev) => prev+1);
       }
 
       appState.current = nextState;
@@ -93,6 +89,9 @@ export default function DashboardLayout() {
               borderTopWidth: 1,
               borderTopColor: COLORS.bgPanelEdge,
               backgroundColor: COLORS.bgPanel,
+              height: 67 + insets.bottom,
+              paddingBottom: insets.bottom,
+              paddingTop: 8
             },
             tabBarLabelStyle: {
               fontSize: 11,
@@ -101,7 +100,7 @@ export default function DashboardLayout() {
             },
           }}
         >
-          <Tabs.Screen name="index" options={{ title: "Dashboard", tabBarIcon: ({ color }) => <ChefHat size={18} color={color} />, }}/>
+          <Tabs.Screen name="index" options={{ title: "Dashboard", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
           <Tabs.Screen name= "delivery" options={{ title: "Delivery", tabBarIcon: ({ color }) => <Navigation size={18} color={color}/>, }} />
           <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
         </Tabs>

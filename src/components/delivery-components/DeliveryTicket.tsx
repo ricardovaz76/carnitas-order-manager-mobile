@@ -1,10 +1,11 @@
 import DeliveryInfo from "@/components/delivery-components/DeliveryInfo";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import TicketPerforation from "@/components/ticket-components/ticket-decor/TicketPerforation";
-import type { Delivery } from "@/lib/types/delivertypes";
+import type { Delivery } from "@/lib/types";
+import { CompleteButtonstyles } from "@/styles/Buttons.styles";
 import { DeliveryHeaderstyles } from "@/styles/Delivery.styles";
 import { COLORS } from "@/styles/StyleTokens";
-import { CompleteButtonstyles, TicketHeaderstyles, Ticketstyles } from "@/styles/Ticket.styles";
+import { TicketHeaderstyles, Ticketstyles } from "@/styles/Ticket.styles";
 import { CheckCircle2 } from "lucide-react-native";
 import { useState } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
@@ -35,14 +36,13 @@ export default function DeliveryQueueCard({ delivery, onRequestComplete }: Deliv
             <Text style={TicketHeaderstyles.orderId}>#{delivery.orderId}</Text>
           </View>
           <DeliveryInfo address={delivery.address} phone={delivery.phone} openMap={openInMaps}/>
-          {/* TODO: total price goes here once the backend calculates it */}
         </View>
 
         <Pressable
           onPress={() => setOpenModal(true)}
           style={({ pressed }) => [CompleteButtonstyles.button, pressed && { opacity: 0.9 }]}
         >
-          <CheckCircle2 size={16} color={COLORS.bgDeep} />
+          <CheckCircle2 size={16} color={COLORS.paper} />
           <Text style={CompleteButtonstyles.text}>Mark Delivered</Text>
         </Pressable>
       </View>
