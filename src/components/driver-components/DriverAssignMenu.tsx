@@ -3,7 +3,7 @@ import { useDeliveryDrivers } from "@/hooks/useDeliveryDrivers";
 import { DriversAssignMenustyles } from "@/styles/Drivers.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { ChevronDown, Truck } from "lucide-react-native";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Animated, Easing, Pressable, Text, View } from "react-native";
 
 interface DriverAssignMenuProps {
@@ -15,7 +15,7 @@ export default function DriverAssignMenu({ assignedDriverId, onAssign, }: Driver
   const [open, setOpen] = useState(false);
   const { deliveryDrivers } = useDeliveryDrivers();
   const assignedDriver = deliveryDrivers.find((d) => d.id === assignedDriverId && d.active);
-  const rotateAnim = useRef(new Animated.Value(0)).current;
+  const [rotateAnim] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
     Animated.timing(rotateAnim, {

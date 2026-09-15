@@ -35,7 +35,7 @@ export const OrderTypestyles = StyleSheet.create({
   deliveryInfo: { marginTop: 4, gap: 2 },
   infoRow: { flexDirection: "row", alignItems: "flex-start", gap: 6 },
   infoText: { fontSize: 12, color: COLORS.customerInfoInk, flexShrink: 1, maxWidth: "90%" },
-  DeliveryInfoText: { fontSize: 16, fontWeight: 600, textDecorationLine: "underline", flexShrink: 1 },
+  DeliveryInfoText: { fontSize: 16, fontWeight: 600, textDecorationLine: "underline", flexShrink: 1, maxWidth: "85%" },
   mono: { fontFamily: FONTS.mono },
 });
 

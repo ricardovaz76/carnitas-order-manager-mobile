@@ -1,4 +1,4 @@
-import { STATUS_PANELS, type GroupedOrders } from "@/lib/grouporders";
+import { STATUS_PANELS, type GroupedOrders } from "@/lib/mappers/grouporders";
 import { PanelTabstyles } from "@/styles/Panel.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { Pressable, Text, View } from "react-native";
