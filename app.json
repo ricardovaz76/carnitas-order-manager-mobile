@@ -8,6 +8,8 @@
     "scheme": "carnitasordermanagermobile",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "supportsTablet": true,
+      "requireFullScreen": true,
       "icon": "./assets/images/icon.png",
       "bundleIdentifier": "com.mendicantbias.carnitasordermanagermobile",
       "infoPlist": {
