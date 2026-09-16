@@ -52,7 +52,8 @@ export const DriversBoardstyles = StyleSheet.create({
 export const DriversAssignMenustyles = StyleSheet.create({
   container: {
     position: "relative",
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
+    marginTop: 6
   },
   button: {
     flexDirection: "row",

@@ -46,14 +46,13 @@ export const TicketItemsstyles = StyleSheet.create({
 
 export const TicketHeaderstyles = StyleSheet.create({
   container: {
+    gap: 8,
+    marginBottom: 8,
+  },
+  row: {
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    paddingBottom: 8,
-    marginBottom: 8,
-    borderBottomWidth: 1.5,
-    borderStyle: "dashed",
-    borderBottomColor: COLORS.inkFaint,
   },
   conent: { flex: 1 },
   orderId: {

@@ -3,6 +3,7 @@ import { COLORS } from "@/styles/StyleTokens";
 import { TicketHeaderstyles } from "@/styles/Ticket.styles";
 import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import { DashedDivider } from "../DashedDivider";
 
 interface TicketHeaderProps {
   orderId: number;
@@ -45,27 +46,30 @@ export default function TicketHeader({ orderId, orderType, firedAt, customerInfo
 
   return (
     <View style={TicketHeaderstyles.container}>
-      <View style={TicketHeaderstyles.conent}>
-        <Text style={TicketHeaderstyles.orderId}>#{orderId}</Text>
-        <TicketOrderType
-          orderId={orderId}
-          orderType={orderType}
-          address={customerInfo.address}
-          phone={customerInfo.phone}
-          driverId={driverId}
-        />
-      </View>
+      <View style={TicketHeaderstyles.row}>
+        <View style={TicketHeaderstyles.conent}>
+          <Text style={TicketHeaderstyles.orderId}>#{orderId}</Text>
+          <TicketOrderType
+            orderId={orderId}
+            orderType={orderType}
+            address={customerInfo.address}
+            phone={customerInfo.phone}
+            driverId={driverId}
+          />
+        </View>
 
-      <View
-        style={[
-          TicketHeaderstyles.badge,
-          { backgroundColor: badgeColor + "22", borderColor: badgeColor },
-        ]}
-      >
-        <Text style={[TicketHeaderstyles.badgeText, { color: badgeColor }]}>
-          {minutes}m
-        </Text>
+        <View
+          style={[
+            TicketHeaderstyles.badge,
+            { backgroundColor: badgeColor + "22", borderColor: badgeColor },
+          ]}
+        >
+          <Text style={[TicketHeaderstyles.badgeText, { color: badgeColor }]}>
+            {minutes}m
+          </Text>
+        </View>
       </View>
+      <DashedDivider/>
     </View>
   );
 }
