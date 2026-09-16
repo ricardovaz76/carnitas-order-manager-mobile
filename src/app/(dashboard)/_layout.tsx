@@ -8,9 +8,9 @@ import { supabase } from "@/lib/supabase/supabase";
 import { Driver } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
-import { ChefHat, Navigation, ReceiptText, Truck } from "lucide-react-native";
+import { Navigation, ReceiptText, Truck } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
-import { AppState, AppStateStatus, StyleSheet, View } from "react-native";
+import { AppState, AppStateStatus, Image, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function Header({ displayName }: { displayName: string }) {
@@ -18,7 +18,7 @@ function Header({ displayName }: { displayName: string }) {
   return (
     <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
       <View style={styles.headerLeft}>
-        <ChefHat color={COLORS.new} size={22} />
+        <Image source={require('../../../assets/images/header-avatar.png')} style={styles.headerLogo}/>
       </View>
       <UserMenu displayName={displayName} />
     </View>
@@ -118,7 +118,7 @@ export default function DashboardLayout() {
             },
           }}
         >
-          <Tabs.Screen name="index" options={{ title: "Dashboard", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
+          <Tabs.Screen name="index" options={{ title: "Orders", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
           <Tabs.Screen name= "delivery" options={{ title: "Delivery", tabBarIcon: ({ color }) => <Navigation size={18} color={color}/>, }} />
           <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
         </Tabs>
@@ -140,4 +140,5 @@ const styles = StyleSheet.create({
   },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 12 },
   headerTitle: { fontSize: 18, fontWeight: "700", color: COLORS.paper },
+  headerLogo: { width: 32, height: 32, borderRadius: 13 }
 });
