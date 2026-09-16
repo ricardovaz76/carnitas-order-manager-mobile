@@ -18,6 +18,8 @@ export function DeliveryDriversProvider({ initialDrivers, children, }: { initial
     setDeliveryDrivers(initialDrivers);
   }
 
+  console.log("driver hook", initialDrivers);
+
   return (
     <DeliveryDriversContext.Provider value={{ deliveryDrivers, setDeliveryDrivers }}>
       {children}

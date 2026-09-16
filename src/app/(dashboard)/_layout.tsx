@@ -3,6 +3,7 @@ import { AppResumeContext } from "@/hooks/useAppResume";
 import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
 import { registerForPushNotifications } from "@/lib/notifications/registerForPushNotifications";
 import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
+import { createHandleInsert, createHandleUpdate } from "@/lib/realtime-handlers/driverRealtimeHandler";
 import { supabase } from "@/lib/supabase/supabase";
 import { Driver } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
@@ -36,7 +37,8 @@ export default function DashboardLayout() {
     void registerForPushNotifications();
   }, []);
 
-  // 
+  // Listener that keeps track of the app state (app running foreground/background)
+  // This is important to refetch data on app state returning to foreground
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextState) => {
       const cameToForeground = appState.current.match(/inactive|background/) && nextState === "active";
@@ -68,13 +70,30 @@ export default function DashboardLayout() {
     loadUser();
   }, []);
 
-  // Fetches the list of delivery drivers from the database and sets them in state
+  // initial fetch delivery drivers list
   useEffect(() => {
     async function  loadDrivers() {
       const driverData = await getDeliveryDrivers();
       setDrivers(driverData);
     }
     loadDrivers();
+    console.log("drivers refetched")
+  }, [resumeSignal]);
+  
+  // realtime listeners to update driver status live
+  useEffect(() => {
+    const handleInsert = createHandleInsert(setDrivers);
+    const handleUpdate = createHandleUpdate(setDrivers);
+    
+    const channel = supabase
+      .channel("delivery_drivers_changes")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "delivery_drivers" }, handleInsert)
+      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "delivery_drivers" }, handleUpdate)
+      .subscribe();
+    
+      return () => {
+        supabase.removeChannel(channel);
+      };
   }, []);
 
    return (
