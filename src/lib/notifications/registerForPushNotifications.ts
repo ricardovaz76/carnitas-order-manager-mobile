@@ -7,7 +7,7 @@ import { Platform } from "react-native";
 
 export async function registerForPushNotifications(): Promise<void> {
   if(!Device.isDevice) {
-    console.log("Push notifications require a physical device");
+    console.error("Push notifications require a physical device");
   }
 
   if (Platform.OS === "android") {

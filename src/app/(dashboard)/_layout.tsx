@@ -3,13 +3,14 @@ import { AppResumeContext } from "@/hooks/useAppResume";
 import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
 import { registerForPushNotifications } from "@/lib/notifications/registerForPushNotifications";
 import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
+import { createHandleInsert, createHandleUpdate } from "@/lib/realtime-handlers/driverRealtimeHandler";
 import { supabase } from "@/lib/supabase/supabase";
 import { Driver } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
-import { ChefHat, Navigation, ReceiptText, Truck } from "lucide-react-native";
+import { Navigation, ReceiptText, Truck } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
-import { AppState, AppStateStatus, StyleSheet, View } from "react-native";
+import { AppState, AppStateStatus, Image, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function Header({ displayName }: { displayName: string }) {
@@ -17,7 +18,7 @@ function Header({ displayName }: { displayName: string }) {
   return (
     <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
       <View style={styles.headerLeft}>
-        <ChefHat color={COLORS.new} size={22} />
+        <Image source={require('../../../assets/images/header-avatar.png')} style={styles.headerLogo}/>
       </View>
       <UserMenu displayName={displayName} />
     </View>
@@ -36,7 +37,8 @@ export default function DashboardLayout() {
     void registerForPushNotifications();
   }, []);
 
-  // 
+  // Listener that keeps track of the app state (app running foreground/background)
+  // This is important to refetch data on app state returning to foreground
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextState) => {
       const cameToForeground = appState.current.match(/inactive|background/) && nextState === "active";
@@ -68,13 +70,29 @@ export default function DashboardLayout() {
     loadUser();
   }, []);
 
-  // Fetches the list of delivery drivers from the database and sets them in state
+  // initial fetch delivery drivers list
   useEffect(() => {
     async function  loadDrivers() {
       const driverData = await getDeliveryDrivers();
       setDrivers(driverData);
     }
     loadDrivers();
+  }, [resumeSignal]);
+  
+  // realtime listeners to update driver status live
+  useEffect(() => {
+    const handleInsert = createHandleInsert(setDrivers);
+    const handleUpdate = createHandleUpdate(setDrivers);
+    
+    const channel = supabase
+      .channel("delivery_drivers_changes")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "delivery_drivers" }, handleInsert)
+      .on("postgres_changes", { event: "UPDATE", schema: "public", table: "delivery_drivers" }, handleUpdate)
+      .subscribe();
+    
+      return () => {
+        supabase.removeChannel(channel);
+      };
   }, []);
 
    return (
@@ -100,7 +118,7 @@ export default function DashboardLayout() {
             },
           }}
         >
-          <Tabs.Screen name="index" options={{ title: "Dashboard", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
+          <Tabs.Screen name="index" options={{ title: "Orders", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
           <Tabs.Screen name= "delivery" options={{ title: "Delivery", tabBarIcon: ({ color }) => <Navigation size={18} color={color}/>, }} />
           <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
         </Tabs>
@@ -122,4 +140,5 @@ const styles = StyleSheet.create({
   },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 12 },
   headerTitle: { fontSize: 18, fontWeight: "700", color: COLORS.paper },
+  headerLogo: { width: 32, height: 32, borderRadius: 13 }
 });
