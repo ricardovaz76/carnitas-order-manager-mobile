@@ -77,7 +77,6 @@ export default function DashboardLayout() {
       setDrivers(driverData);
     }
     loadDrivers();
-    console.log("drivers refetched")
   }, [resumeSignal]);
   
   // realtime listeners to update driver status live
