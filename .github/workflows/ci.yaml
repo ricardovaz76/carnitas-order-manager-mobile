@@ -28,7 +28,7 @@ jobs:
       - name: Lint
         run: npx eslint .
 
-      - name:
+      - name: Run tests
         run: npx jest --ci
 
       - name: Validate Expo bundle
