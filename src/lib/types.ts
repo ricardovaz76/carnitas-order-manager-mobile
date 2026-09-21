@@ -37,7 +37,6 @@ export type UserRows = Database["public"]["Tables"]["users"]["Row"];
 export interface Driver {
   id: string;
   name: string;
-  phone: string;
   active: boolean;
 }
 

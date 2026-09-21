@@ -10,7 +10,6 @@ export function createHandleInsert(setDrivers: Dispatch<SetStateAction<Driver[]>
       {
         id: row.id,
         name: "Unknown",
-        phone: row.phone,
         active: row.availability_status === "active",
       },
     ]);
@@ -23,7 +22,7 @@ export function createHandleUpdate(setDrivers: Dispatch<SetStateAction<Driver[]>
     setDrivers((prev) =>
       prev.map((driver) =>
         driver.id === row.id
-          ? { ...driver, phone: row.phone, active: row.availability_status === "active" }
+          ? { ...driver, active: row.availability_status === "active" }
           : driver,
       ),
     );

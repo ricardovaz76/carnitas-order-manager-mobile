@@ -1,6 +1,5 @@
 import RegisterButton from "@/components/buttons/RegisterButton";
 import ToggleStatus from "@/components/buttons/ToggleStatus";
-import RegisterDriverModal from "@/components/modals/RegisterModal";
 import PanelHeader from "@/components/panel-components/PanelHeader";
 import { useDeliveryDrivers } from "@/hooks/useDeliveryDrivers";
 import { useToast } from "@/hooks/useToast";
@@ -14,6 +13,7 @@ import { COLORS } from "@/styles/StyleTokens";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useEffect, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
+import ConfirmModal from "./modals/ConfirmModal";
 
 export default function DriversBoard() {
   const { deliveryDrivers, setDeliveryDrivers } = useDeliveryDrivers();
@@ -54,9 +54,9 @@ export default function DriversBoard() {
 
   // This function registers the current user with the given phone number
   // Prevents the user from registering a second time
-  async function handleRegister(phone: string) {
+  async function handleRegister() {
     try {
-      const newDriver = await registerDriverMutation(currentUserID, phone);
+      const newDriver = await registerDriverMutation(currentUserID);
       setDeliveryDrivers([...deliveryDrivers, newDriver]);
       setModalOpen(false);
       showToast("Driver Registered", "success");
@@ -73,14 +73,12 @@ export default function DriversBoard() {
         <View style={DriversBoardstyles.table}>
           <View style={[DriversBoardstyles.row, DriversBoardstyles.headerRow, { borderBottomColor: COLORS.bgPanelEdge }]}>
             <Text style={[DriversBoardstyles.headerCell, DriversBoardstyles.nameCol, { color: COLORS.inkFaint }]}>Display Name</Text>
-            <Text style={[DriversBoardstyles.headerCell, DriversBoardstyles.phoneCol, { color: COLORS.inkFaint }]}>Phone Number</Text>
             <Text style={[DriversBoardstyles.headerCell, DriversBoardstyles.activeCol, { color: COLORS.inkFaint }]}>Active</Text>
           </View>
 
           {deliveryDrivers.map((d) => (
             <View key={d.id} style={[DriversBoardstyles.row, { borderBottomColor: COLORS.bgPanelEdge }]}>
               <Text style={[DriversBoardstyles.cell, DriversBoardstyles.nameCol, DriversBoardstyles.nameText, { color: COLORS.paper }]}>{d.name}</Text>
-              <Text style={[DriversBoardstyles.cell, DriversBoardstyles.phoneCol, { color: COLORS.inkFaint }]}>{d.phone}</Text>
               <View style={[DriversBoardstyles.cell, DriversBoardstyles.activeCol]}>
                 <ToggleStatus active={d.active} onToggle={() => void toggleActive(d.id)} />
               </View>
@@ -92,7 +90,7 @@ export default function DriversBoard() {
       </View>
 
       {modalOpen && (
-        <RegisterDriverModal onClose={() => setModalOpen(false)} onRegister={handleRegister} />
+        <ConfirmModal message="Register as a Delivery Driver?" confirmLabel="Register" confirmColor={COLORS.new} onConfirm={handleRegister} onCancel={() => setModalOpen(false)}/>
       )}
     </ScrollView>
   );
