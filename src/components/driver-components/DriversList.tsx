@@ -38,7 +38,6 @@ export default function DriversList({ assignedDriverId, onAssign, setOpen, }: Dr
 
               <View style={DriversListstyles.rowText}>
                 <Text style={[DriversListstyles.name, { color: COLORS.paper }]} numberOfLines={1}> {d.name} </Text>
-                <Text style={[DriversListstyles.phone, { color: COLORS.inkFaint }]} numberOfLines={1}> {d.phone} </Text>
               </View>
               
             </View>

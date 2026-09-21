@@ -14,10 +14,10 @@ export async function updateDriverAvailability( driverId: string, active: boolea
   }
 }
 
-export async function registerDriver( userId: string, phone: string, ): Promise<Driver> {
+export async function registerDriver( userId: string): Promise<Driver> {
   const { data, error } = await supabase
     .from("delivery_drivers")
-    .insert({ user_id: userId, phone })
+    .insert({ user_id: userId })
     .select("*, users(*)")
     .single();
 

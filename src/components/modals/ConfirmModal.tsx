@@ -10,13 +10,7 @@ interface TicketConfirmModalProps {
   onCancel: () => void;
 }
 
-export default function ConfirmModal({
-  message,
-  confirmLabel,
-  confirmColor,
-  onConfirm,
-  onCancel,
-}: TicketConfirmModalProps) {
+export default function ConfirmModal({ message, confirmLabel, confirmColor, onConfirm, onCancel }: TicketConfirmModalProps) {
   return (
     <View style={ConfirmModalstyles.overlay}>
       <View style={ConfirmModalstyles.box}>
