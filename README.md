@@ -19,6 +19,9 @@ Staff and drivers use this app to manage the day-to-day flow of an order after i
 
 ## Features
 
+- **Authentication**
+  - Staff sign in with Supabase email/password authentication, using an account provisioned by an admin
+
 - **Order Board**
   - Kanban-style board — New Orders / In the Kitchen / Ready for Pickup
   - Every order ticket shows whether it's pickup or delivery, as determined by the backend's LLM
@@ -50,7 +53,24 @@ Staff and drivers use this app to manage the day-to-day flow of an order after i
 
 ## Project Structure
 
-<!-- Layout goes here -->
+src/
+└── components/
+    ├── buttons/
+    ├── delivery_components/
+    │   ├── DeliveryInfo.tsx      # Renders the address and phone number
+    │   └── DeliveryTicket.tsx    # Uses DeliveryInfo; includes the Mark Delivered button, passes completion back to DeliveryBoard
+    ├── driver_components/
+    ├── login-components/
+    ├── modals/                   # Includes ConfirmModal — generic confirm dialog (question, confirm label, color)
+    ├── panel-components/
+    ├── ticket-components/
+    ├── DashedDivider.tsx    # Decorative dashed line for ticket components (iOS doesn't support the dashed borderStyle)
+    ├── DeliveryBoard.tsx    # Queries customer info (address, phone) for the delivery page; initial fetch + realtime
+    ├── DriversBoard.tsx     # Uses the drivers hook to display driver info + the active-status toggle
+    ├── MobileLayout.tsx     # Groups orders by status and renders the active panel (title, orders, color) via PanelTabs and Panel components
+    ├── OrdersBoard.tsx      # Fetches active orders + active drivers (initial + realtime); passes orders to MobileLayout; useOrders hook receives status-change updates from children for optimistic updates
+    ├── RotatingChevron.tsx  # Decorative animated chevron that rotates open/closed
+    └── UserMenu.tsx         # Own inline modal (not from modals/) with Language (placeholder, not yet implemented), notification opt-in toggle (updates DB), and Sign Out (confirmation via modals/ConfirmModal); triggered from (dashboard)/layout by tapping the display name
 
 ## Getting Started
 
