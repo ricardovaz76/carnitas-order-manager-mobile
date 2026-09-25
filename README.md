@@ -54,13 +54,19 @@ Staff and drivers use this app to manage the day-to-day flow of an order after i
 ## Project Structure
 
 ```
-src/
-├── app/           # Screens and layouts (expo-router)
-├── components/    # UI components, organized by feature area
-├── hooks/         # Shared data-fetching and realtime hooks
-├── lib/           # Supabase client and other integrations
-├── styles/        # Shared style definitions
-└── utils/         # Helper functions
+.
+├── .github/
+│   └── workflows/   # CI: Jest test run, OTA update publish
+├── assets/          # App icons, images
+├── src/
+│   ├── app/           # Screens and layouts (expo-router)
+│   ├── components/    # UI components, organized by feature area
+│   ├── hooks/         # Shared data-fetching and realtime hooks
+│   ├── lib/           # Supabase client and other integrations
+│   ├── styles/        # Shared style definitions
+│   └── utils/         # Helper functions
+└── tests/
+    └── unit/        # mapDeliveries, mapDrivers, mapOrders, groupOrders — data-shaping utilities that structure queried Supabase data for display
 ```
 
 ## Getting Started
