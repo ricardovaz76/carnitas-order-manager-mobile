@@ -97,7 +97,7 @@ Distributed privately via Google Play Internal Testing (Android) and TestFlight 
 Distributed under the MIT License. See `LICENSE` for details.
 
 ## Contact
-
+   
 Ricardo Vazquez - [ricardo.vazquez2001@gmail.com](mailto:ricardo.vazquez2001@gmail.com)
 
 ## Related Repositories
