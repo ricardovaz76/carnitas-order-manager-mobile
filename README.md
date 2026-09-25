@@ -98,7 +98,7 @@ Distributed under the MIT License. See `LICENSE` for details.
 
 ## Contact
 
-_TBD_
+Ricardo Vazquez - [ricardo.vazquez2001@gmail.com](mailto:ricardo.vazquez2001@gmail.com)
 
 ## Related Repositories
 
