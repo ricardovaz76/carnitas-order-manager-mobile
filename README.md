@@ -1,56 +1,140 @@
-# Welcome to your Expo app 👋
+# Carnitas Order Manager: Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Expo](https://img.shields.io/badge/Expo-000020?style=flat&logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React_Native-61DAFB?style=flat&logo=react&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-C21325?style=flat&logo=jest&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## Get started
+The companion React Native/Expo app for restaurant staff and delivery drivers — the order board and delivery workflow that the [backend](https://github.com/ricardovaz76/order-manager-backend) feeds with parsed Messenger orders.
 
-1. Install dependencies
+## Overview
 
-   ```bash
-   npm install
-   ```
+Staff and drivers use this app to manage the day-to-day flow of an order after it's been received and parsed by the backend. Every order lands on the staff order board, with its ticket showing whether it's pickup or delivery, as determined by the backend's LLM. Staff assign a driver to delivery orders, which sends that order to the assigned driver's own delivery page. All staff have access to the app's delivery page, but since it only shows orders assigned to whoever is registered as a delivery driver, it's only meaningful to staff who've registered as a driver from the Drivers tab. The app talks directly to Supabase — not through the backend — using an authenticated session and Row Level Security, with live updates via Supabase realtime subscriptions.
 
-2. Start the app
+## Showcase
 
-   ```bash
-   npx expo start
-   ```
+An order comes in through Messenger and lands on the staff order board in realtime:
 
-In the output, you'll find options to open the app in a
+![A customer places an order over Facebook Messenger; the order appears on the staff order board a moment later](assets/demos/order-flow.gif)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The customer adds a delivery address, and the order updates from Pickup to Delivery:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+![The customer asks for delivery; the order card updates from Pickup to Delivery with the address and an Assign driver control](assets/demos/order-type.gif)
 
-## Get a fresh project
+The customer sends a phone number, and it's added to the order:
 
-When you're ready, run:
+![The customer sends a phone number; the order card fills it in](assets/demos/phone-update.gif)
 
-```bash
-npm run reset-project
+The customer asks for the ribs to be bagged separately, and the note shows up as a special instruction:
+
+![The customer asks for the ribs to be bagged separately; the order card shows it as a special instruction](assets/demos/special-instructions.gif)
+
+Staff assign the order to a driver, who sees it on their delivery page and can tap the address to pull up directions:
+
+![A staff member assigns the order to a driver; the driver's delivery page shows the order, and tapping the address opens Google Maps](assets/demos/delivery-flow.gif)
+
+## Features
+
+- **Authentication**
+  - Staff sign in with Supabase email/password authentication, using an account provisioned by an admin
+
+- **Order Board**
+  - Kanban-style board — New Orders / In the Kitchen / Ready for Pickup
+  - Every order ticket shows whether it's pickup or delivery, as determined by the backend's LLM
+  - Staff assign a driver to delivery orders, which sends the order to that driver's delivery page
+  - New-order push alerts (opt-in)
+
+- **Driver Registration**
+  - Staff can register themselves as a delivery driver from the Drivers tab
+  - Registered drivers can toggle their status to allow deliveries to be assigned to them
+
+- **Delivery Page**
+  - Accessible to all staff, but only useful to staff registered as a delivery driver
+  - Each driver sees only their own assigned deliveries
+  - Live-updates via a Supabase realtime subscription filtered to the driver's id
+  - Tapping a delivery address opens Google Maps for directions
+  - Can mark a delivery as delivered — no other status control
+  - Delivery-assignment push alerts (mandatory) for whoever's assigned
+
+## Tech Stack
+
+- **Framework:** React Native (Expo)
+- **Navigation:** expo-router
+- **Styling:** StyleSheet
+- **Backend/data:** Supabase (Postgres) — direct client access with Row Level Security and realtime subscriptions
+- **Push notifications:** Expo push notifications (permission + token registration, app state listeners)
+- **Testing:** Jest (`jest --ci`)
+- **CI/CD:** GitHub Actions — automated Jest test run, plus OTA updates via `eas update` on merge to `main`
+- **Build/Deploy:** EAS Build/Submit (manual, `production` profile) for native builds and store submissions
+
+## Project Structure
+
+```
+.
+├── .github/
+│   └── workflows/   # CI: Jest test run, OTA update publish
+├── assets/          # App icons, images
+├── src/
+│   ├── app/           # Screens and layouts (expo-router)
+│   ├── components/    # UI components, organized by feature area
+│   ├── hooks/         # Shared data-fetching and realtime hooks
+│   ├── lib/           # Supabase client and other integrations
+│   ├── styles/        # Shared style definitions
+│   └── utils/         # Helper functions
+└── tests/
+    └── unit/        # mapDeliveries, mapDrivers, mapOrders, groupOrders — data-shaping utilities that structure queried Supabase data for display
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Getting Started
 
-### Other setup steps
+### Prerequisites
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+- Node.js
+- Expo CLI / EAS CLI
+- An Expo account (for `eas build`/`eas update`)
+- Access to the project's Supabase instance (env vars)
 
-## Learn more
+### Installation
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+npm install
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Local Development
 
-## Join the community
+```bash
+npx expo start
+```
 
-Join our community of developers creating universal apps.
+### Running Tests
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+jest --ci
+```
+
+## Deployment
+
+JS/asset changes are shipped automatically as OTA updates via GitHub Actions (`eas update`, `production` channel) on merge to `main`. Native builds and app store submissions are manual:
+
+```bash
+eas build --platform android --profile production
+eas build --platform ios --profile production
+eas submit --platform android
+eas submit --platform ios
+```
+
+Distributed privately via Google Play Internal Testing (Android) and TestFlight Internal Testing (iOS) — invite-only, no public listing.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for details.
+
+## Contact
+   
+Ricardo Vazquez - [ricardo.vazquez2001@gmail.com](mailto:ricardo.vazquez2001@gmail.com)
+
+## Related Repositories
+
+- **[Backend](https://github.com/ricardovaz76/order-manager-backend)** — The AWS Lambda backend that receives Messenger orders and parses them with an LLM.
