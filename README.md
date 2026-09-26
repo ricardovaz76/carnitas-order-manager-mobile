@@ -31,6 +31,10 @@ The customer asks for the ribs to be bagged separately, and the note shows up as
 
 ![The customer asks for the ribs to be bagged separately; the order card shows it as a special instruction](assets/demos/special-instructions.gif)
 
+Staff assign the order to a driver, who sees it on their delivery page and can tap the address to pull up directions:
+
+![A staff member assigns the order to a driver; the driver's delivery page shows the order, and tapping the address opens Google Maps](assets/demos/delivery-flow.gif)
+
 ## Features
 
 - **Authentication**
