@@ -13,7 +13,7 @@ The companion React Native/Expo app for restaurant staff and delivery drivers �
 
 Staff and drivers use this app to manage the day-to-day flow of an order after it's been received and parsed by the backend. Every order lands on the staff order board, with its ticket showing whether it's pickup or delivery, as determined by the backend's LLM. Staff assign a driver to delivery orders, which sends that order to the assigned driver's own delivery page. All staff have access to the app's delivery page, but since it only shows orders assigned to whoever is registered as a delivery driver, it's only meaningful to staff who've registered as a driver from the Drivers tab. The app talks directly to Supabase — not through the backend — using an authenticated session and Row Level Security, with live updates via Supabase realtime subscriptions.
 
-## In Action
+## Showcase
 
 An order comes in through Messenger and lands on the staff order board in realtime:
 
