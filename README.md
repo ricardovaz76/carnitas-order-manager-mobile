@@ -1,4 +1,4 @@
-# Carnitas Order Manager — Mobile App
+# Carnitas Order Manager: Mobile App
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Expo](https://img.shields.io/badge/Expo-000020?style=flat&logo=expo&logoColor=white)
@@ -15,7 +15,21 @@ Staff and drivers use this app to manage the day-to-day flow of an order after i
 
 ## In Action
 
-<!-- GIFs go here -->
+An order comes in through Messenger and lands on the staff order board in realtime:
+
+![A customer places an order over Facebook Messenger; the order appears on the staff order board a moment later](assets/demos/order-flow.gif)
+
+The customer adds a delivery address, and the order updates from Pickup to Delivery:
+
+![The customer asks for delivery; the order card updates from Pickup to Delivery with the address and an Assign driver control](assets/demos/order-type.gif)
+
+The customer sends a phone number, and it's added to the order:
+
+![The customer sends a phone number; the order card fills it in](assets/demos/phone-update.gif)
+
+The customer asks for the ribs to be bagged separately, and the note shows up as a special instruction:
+
+![The customer asks for the ribs to be bagged separately; the order card shows it as a special instruction](assets/demos/special-instructions.gif)
 
 ## Features
 
