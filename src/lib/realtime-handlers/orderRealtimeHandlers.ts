@@ -1,5 +1,5 @@
 import { getOrderById } from "@/lib/queries/get-order-queries";
-import type { CustomerInfoRow, Order, OrderItemRow, OrderRow } from "@/lib/types";
+import type { Order, OrderItemRow, OrderRow } from "@/lib/types";
 import type { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -45,25 +45,6 @@ export function createHandleDelete(setOrders: SetOrders) {
     if (!("id" in payload.old)) return;
     const deletedId = payload.old.id;
     setOrders((prev) => prev.filter((order) => order.id !== deletedId));
-  };
-}
-
-export function createHandleCustomerInfoUpdate(setOrders: SetOrders) {
-  return function handleCustomerInfoUpdate(payload: RealtimePostgresChangesPayload<CustomerInfoRow>) {
-    if (!("order_id" in payload.new)) return;
-    const updated = payload.new;
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === updated.order_id
-          ? {
-              ...order,
-              driverId: updated.driver_id,
-              customerAddress: updated.customer_address,
-              customerPhone: updated.customer_phone,
-            }
-          : order,
-      ),
-    );
   };
 }
 

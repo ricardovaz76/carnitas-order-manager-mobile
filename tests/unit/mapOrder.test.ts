@@ -19,18 +19,13 @@ function makeRow(overrides: Partial<OrderWithItems> = {}): OrderWithItems {
     order_status: "new",
     created_at: "2026-01-01T00:00:00.000Z",
     additional_info: "Leave at door",
-    customer_info: {
-      customer_phone: "555-0100",
-      customer_address: "123 Main St",
-      driver_id: "driver-1",
-    },
     order_items: [makeItem()],
     ...overrides,
   } as OrderWithItems;
 }
 
 describe("mapOrder", () => {
-  it("maps a full row with customer_info and order_items", () => {
+  it("maps a full row with order_items", () => {
     const row = makeRow();
 
     const result = mapOrder(row);
@@ -41,9 +36,6 @@ describe("mapOrder", () => {
       status: "new",
       firedAt: new Date("2026-01-01T00:00:00.000Z").getTime(),
       additionalInfo: "Leave at door",
-      customerPhone: "555-0100",
-      customerAddress: "123 Main St",
-      driverId: "driver-1",
       items: [
         {
           id: "item-1",
@@ -53,32 +45,6 @@ describe("mapOrder", () => {
         },
       ],
     });
-  });
-
-  it("falls back customerPhone, customerAddress, and driverId to null when customer_info is null", () => {
-    const row = makeRow({ customer_info: null });
-
-    const result = mapOrder(row);
-
-    expect(result.customerPhone).toBeNull();
-    expect(result.customerAddress).toBeNull();
-    expect(result.driverId).toBeNull();
-  });
-
-  it("falls back individual customer_info fields to null when present but null", () => {
-    const row = makeRow({
-      customer_info: {
-        customer_phone: null,
-        customer_address: null,
-        driver_id: null,
-      } as OrderWithItems["customer_info"],
-    });
-
-    const result = mapOrder(row);
-
-    expect(result.customerPhone).toBeNull();
-    expect(result.customerAddress).toBeNull();
-    expect(result.driverId).toBeNull();
   });
 
   it("returns an empty items array when order_items is empty", () => {

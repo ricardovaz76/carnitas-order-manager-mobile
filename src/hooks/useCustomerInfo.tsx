@@ -20,6 +20,12 @@ export function useCustomerInfo() {
   return context;
 }
 
+// Customer info for a single order, or null if the order has none
+export function useCustomerInfoForOrder(orderId: number): CustomerInfo | null {
+  const { customerInfo } = useCustomerInfo();
+  return customerInfo.find((info) => info.orderId === orderId) ?? null;
+}
+
 // Customer info rows assigned to the current user's driver id
 export function useMyDeliveries() {
   const { customerInfo, setCustomerInfo, currentDriverId } = useCustomerInfo();

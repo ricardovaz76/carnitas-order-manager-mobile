@@ -60,7 +60,7 @@ export async function assignDriverToOrder( orderId: number, newDriverId: string,
   }
 
   // When a delivery gets reassigned to another driver, this change is broadcasted to 
-  // "driver_deliveries" channel on src/components/DeliveryBoard.tsx to ensure the Delivery board 
+  // "driver-${driverId}" channel on src/app/(dashboard)/_layout.tsx to ensure the Delivery board 
   // removes any deliveries that they are no longer assign to
   if (previousDriverId && previousDriverId !== newDriverId) {
   try {

@@ -5,6 +5,7 @@ import EditModal from "@/components/modals/EditModal";
 import TicketHeader from "@/components/ticket-components/TicketHeader";
 import TicketItems from "@/components/ticket-components/TicketItems";
 import TicketPerforation from "@/components/ticket-components/ticket-decor/TicketPerforation";
+import { useCustomerInfoForOrder } from "@/hooks/useCustomerInfo";
 import { useOrders } from "@/hooks/useOrders";
 import { useToast } from "@/hooks/useToast";
 import {
@@ -29,9 +30,10 @@ export default function Ticket({ order }: TicketProps) {
   const [showCompleteModal, setShowCompleteModal] = useState<boolean>(false);
   const [showCancelModal, setShowCancelModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const orderCustomerInfo = useCustomerInfoForOrder(order.id);
   const customerInfo = {
-    address: order.customerAddress ?? null,
-    phone: order.customerPhone ?? null,
+    address: orderCustomerInfo?.address ?? null,
+    phone: orderCustomerInfo?.phone ?? null,
   };
   const showToast = useToast();
   const { updateOrderFields } = useOrders();
@@ -109,7 +111,7 @@ export default function Ticket({ order }: TicketProps) {
           orderType={order.orderType}
           firedAt={order.firedAt}
           customerInfo={customerInfo}
-          driverId={order.driverId}
+          driverId={orderCustomerInfo?.driverId ?? null}
         />
         <TicketItems
           orderItems={order.items}

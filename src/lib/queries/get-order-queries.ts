@@ -5,7 +5,7 @@ import type { Order } from "@/lib/types";
 export async function getActiveOrders(): Promise<Order[]> {
   const { data, error } = await supabase
     .from("orders")
-    .select("*, order_items(*), customer_info(*)")
+    .select("*, order_items(*)")
     .eq("active_status", "active");
 
   if (error) {
@@ -21,7 +21,7 @@ export async function getActiveOrders(): Promise<Order[]> {
 export async function getOrderById(id: number): Promise<Order | null> {
   const { data, error } = await supabase
     .from("orders")
-    .select("*, order_items(*), customer_info(*)")
+    .select("*, order_items(*)")
     .eq("id", id)
     .single();
 
