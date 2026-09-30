@@ -25,9 +25,6 @@ export interface Order {
   firedAt: number;
   items: OrderItem[];
   additionalInfo: string | null;
-  customerPhone: string | null;
-  customerAddress: string | null;
-  driverId: string | null;
 }
 
 // =========================== Driver Types ====================================
@@ -41,17 +38,13 @@ export interface Driver {
 }
 
 
-// =========================== Delivery Types ====================================
-export interface Delivery {
-  id: string;
-  address: string | null;
-  phone: string | null;
-  orderId: number;
-}
-
 // =========================== Customer Types ====================================
 export type CustomerInfoRow = Database["public"]["Tables"]["customer_info"]["Row"];
-export type DeliveryCustomerInfoRow = Pick<
-  CustomerInfoRow,
-  "id" | "customer_address" | "customer_phone" | "order_id"
->;
+
+export interface CustomerInfo {
+  id: string;
+  orderId: number;
+  address: string | null;
+  phone: string | null;
+  driverId: string | null;
+}

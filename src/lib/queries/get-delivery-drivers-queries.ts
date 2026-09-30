@@ -16,3 +16,19 @@ export async function getDeliveryDrivers(): Promise<Driver[]> {
 
   return (data ?? []).map(mapDriver);
 }
+
+// Resolves the delivery driver id for the given user, or null if the user isn't a registered driver
+export async function getDriverIdForUser(userId: string): Promise<string | null> {
+  const { data, error } = await supabase
+    .from("delivery_drivers")
+    .select("id")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Failed to fetch driver id:", error);
+    return null;
+  }
+
+  return data?.id ?? null;
+}
