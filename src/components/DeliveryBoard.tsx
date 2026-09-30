@@ -1,78 +1,18 @@
 import DeliveryTicket from "@/components/delivery-components/DeliveryTicket";
 import PanelHeader from "@/components/panel-components/PanelHeader";
-import { useAppResume } from "@/hooks/useAppResume";
+import { useMyDeliveries } from "@/hooks/useCustomerInfo";
 import { useToast } from "@/hooks/useToast";
-import { getMyDeliveries } from "@/lib/queries/delivery-queries";
 import { completeOrder } from "@/lib/queries/order-mutation-queries";
-import { supabase } from "@/lib/supabase/supabase";
-import { type Delivery } from "@/lib/types";
 import { Deliverystyles } from "@/styles/Delivery.styles";
 import { COLORS } from "@/styles/StyleTokens";
 import { getErrorMessage } from "@/utils/getErrorMessage";
-import { useEffect, useState } from "react";
 import { View } from "react-native";
 
+// Customer info is fetched and kept live in the dashboard layout,
+// useMyDeliveries filters it down to the rows assigned to the current user's driver id
 export default function DeliveryBoard() {
- const [deliveries, setDeliveries] = useState<Delivery[]>([]);
- const [driverId, setDriverId] = useState<string | null>(null);
- const showToast = useToast();
- const resumeSignal = useAppResume();
-
-  async function loadDeliveries(id: string) {
-    const rows = await getMyDeliveries(id);
-    setDeliveries(rows);
-  }
-
-  // resolve driver id, initial fetch, subscribe once
-  useEffect(() => {
-    let channel: ReturnType<typeof supabase.channel> | null = null;
-
-    async function init() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        return;
-      }
-
-      const { data: driverData, error: driverError } = await supabase
-        .from("delivery_drivers")
-        .select("id")
-        .eq("user_id", user.id)
-        .single();
-
-      if (driverError || !driverData) {
-        return;
-      }
-
-      setDriverId(driverData.id);
-      await loadDeliveries(driverData.id);
-
-      channel = supabase
-        .channel(`driver-${driverData.id}`)
-        .on(
-          "postgres_changes",
-          { event: "*", schema: "public", table: "customer_info", filter: `driver_id=eq.${driverData.id}` },
-          () => { void loadDeliveries(driverData.id); }
-        )
-        .on("broadcast", { event: "delivery_removed" }, () => { void loadDeliveries(driverData.id); })
-        .subscribe();
-    }
-
-    void init();
-
-    return () => {
-      if (channel) {
-        supabase.removeChannel(channel);
-      }
-    };
-  }, []);
-
-  // Resuming app state fetches the data
-  useEffect(() => {
-    if (!driverId) {
-      return;
-    }
-    getMyDeliveries(driverId).then(setDeliveries);
-  }, [resumeSignal]);
+  const { deliveries, removeDelivery } = useMyDeliveries();
+  const showToast = useToast();
 
   async function handleComplete(Id: number) {
     try {
@@ -81,7 +21,7 @@ export default function DeliveryBoard() {
         showToast("Order isn't ready to complete yet", "error");
       }
       else {
-        setDeliveries((prev) => prev.filter((delivery) => delivery.orderId !== Id))
+        removeDelivery(Id);
       }
     } catch (error) {
       showToast(getErrorMessage(error, "Failed to complete order"), "error");

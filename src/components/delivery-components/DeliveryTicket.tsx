@@ -1,7 +1,7 @@
 import DeliveryInfo from "@/components/delivery-components/DeliveryInfo";
 import ConfirmModal from "@/components/modals/ConfirmModal";
 import TicketPerforation from "@/components/ticket-components/ticket-decor/TicketPerforation";
-import type { Delivery } from "@/lib/types";
+import type { CustomerInfo } from "@/lib/types";
 import { CompleteButtonstyles } from "@/styles/Buttons.styles";
 import { DeliveryHeaderstyles } from "@/styles/Delivery.styles";
 import { COLORS } from "@/styles/StyleTokens";
@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
 
 interface DeliveryQueueCardProps {
-  delivery: Delivery;
+  delivery: CustomerInfo;
   onRequestComplete: () => void;
 }
 

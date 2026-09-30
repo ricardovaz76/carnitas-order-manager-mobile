@@ -134,6 +134,25 @@ export default function DashboardLayout() {
     };
   }, []);
 
+  // When a delivery is reassigned away from this driver, assignDriverToOrder broadcasts
+  // "delivery_removed" on this driver's channel, so customer info is refetched
+  useEffect(() => {
+    if (!currentDriverId) {
+      return;
+    }
+
+    const channel = supabase
+      .channel(`driver-${currentDriverId}`)
+      .on("broadcast", { event: "delivery_removed" }, () => {
+        void getDeliveryCustomerInfo().then(setCustomerInfo);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [currentDriverId]);
+
    return (
     <AppResumeContext.Provider value={resumeSignal}>
       <CustomerInfoContext.Provider value={{ customerInfo, setCustomerInfo, currentDriverId }}>
