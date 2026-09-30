@@ -23,6 +23,25 @@
           "other_platform_oauth_client": []
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189491623407:android:03c0aaaa1627c27565721a",
+        "android_client_info": {
+          "package_name": "com.mendicantbias.carnitasordermanagermobile.preview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCorqTebGoSg8X6VUn9ytQFgKotH3psF1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"
