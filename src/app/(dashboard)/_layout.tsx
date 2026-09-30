@@ -1,11 +1,18 @@
 import UserMenu from "@/components/UserMenu";
 import { AppResumeContext } from "@/hooks/useAppResume";
+import { CustomerInfoContext } from "@/hooks/useCustomerInfo";
 import { DeliveryDriversProvider } from "@/hooks/useDeliveryDrivers";
 import { registerForPushNotifications } from "@/lib/notifications/registerForPushNotifications";
-import { getDeliveryDrivers } from "@/lib/queries/get-delivery-drivers-queries";
+import { getDeliveryCustomerInfo } from "@/lib/queries/customer-info-queries";
+import { getDeliveryDrivers, getDriverIdForUser } from "@/lib/queries/get-delivery-drivers-queries";
+import {
+  createHandleDelete as createHandleCustomerInfoDelete,
+  createHandleInsert as createHandleCustomerInfoInsert,
+  createHandleUpdate as createHandleCustomerInfoUpdate,
+} from "@/lib/realtime-handlers/customerInfoRealtimeHandlers";
 import { createHandleInsert, createHandleUpdate } from "@/lib/realtime-handlers/driverRealtimeHandler";
 import { supabase } from "@/lib/supabase/supabase";
-import { Driver } from "@/lib/types";
+import { CustomerInfo, CustomerInfoRow, Driver } from "@/lib/types";
 import { COLORS } from "@/styles/StyleTokens";
 import { Tabs } from "expo-router";
 import { Navigation, ReceiptText, Truck } from "lucide-react-native";
@@ -28,6 +35,8 @@ function Header({ displayName }: { displayName: string }) {
 export default function DashboardLayout() {
   const [displayName, setDisplayName] = useState("");
   const [drivers, setDrivers] = useState<Driver[]>([]);
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo[]>([]);
+  const [currentDriverId, setCurrentDriverId] = useState<string | null>(null);
   const [resumeSignal, setResumeSignal] = useState(0);
   const appState = useRef<AppStateStatus>(AppState.currentState);
   const insets = useSafeAreaInsets();
@@ -51,7 +60,7 @@ export default function DashboardLayout() {
     return () => subscription.remove();
   }, []);
 
-  // Grabs the current user's display name for the layout header
+  // Grabs the current user's display name for the layout header and their driver id (null if not a driver)
   useEffect(() => {
     async function loadUser() {
       const { data: { user }, } = await supabase.auth.getUser();
@@ -66,6 +75,7 @@ export default function DashboardLayout() {
         .single();
 
       setDisplayName(data?.display_name ?? "");
+      setCurrentDriverId(await getDriverIdForUser(user.id));
     }
     loadUser();
   }, []);
@@ -95,34 +105,65 @@ export default function DashboardLayout() {
       };
   }, []);
 
+  // initial fetch of customer info for all delivery orders
+  useEffect(() => {
+    async function loadCustomerInfo() {
+      const customerInfoData = await getDeliveryCustomerInfo();
+      setCustomerInfo(customerInfoData);
+    }
+    loadCustomerInfo();
+  }, [resumeSignal]);
+
+  // realtime listeners to keep customer info live
+  // - INSERT/UPDATE on customer_info: new delivery orders, address, phone, and driver assignment changes
+  // - DELETE on customer_info: a trigger deletes the row once its order is completed or cancelled
+  useEffect(() => {
+    const handleInsert = createHandleCustomerInfoInsert(setCustomerInfo);
+    const handleUpdate = createHandleCustomerInfoUpdate(setCustomerInfo);
+    const handleDelete = createHandleCustomerInfoDelete(setCustomerInfo);
+
+    const channel = supabase
+      .channel("customer_info_changes")
+      .on<CustomerInfoRow>("postgres_changes", { event: "INSERT", schema: "public", table: "customer_info" }, handleInsert)
+      .on<CustomerInfoRow>("postgres_changes", { event: "UPDATE", schema: "public", table: "customer_info" }, handleUpdate)
+      .on<CustomerInfoRow>("postgres_changes", { event: "DELETE", schema: "public", table: "customer_info" }, handleDelete)
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
    return (
     <AppResumeContext.Provider value={resumeSignal}>
-      <DeliveryDriversProvider initialDrivers={drivers}>
-        <Tabs
-          screenOptions={{
-            header: () => <Header displayName={displayName} />,
-            tabBarActiveTintColor: COLORS.new,
-            tabBarInactiveTintColor: COLORS.inkFaint,
-            tabBarStyle: {
-              borderTopWidth: 1,
-              borderTopColor: COLORS.bgPanelEdge,
-              backgroundColor: COLORS.bgPanel,
-              height: 67 + insets.bottom,
-              paddingBottom: insets.bottom,
-              paddingTop: 8
-            },
-            tabBarLabelStyle: {
-              fontSize: 11,
-              fontWeight: "700",
-              textTransform: "uppercase",
-            },
-          }}
-        >
-          <Tabs.Screen name="index" options={{ title: "Orders", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
-          <Tabs.Screen name= "delivery" options={{ title: "Delivery", tabBarIcon: ({ color }) => <Navigation size={18} color={color}/>, }} />
-          <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
-        </Tabs>
-      </DeliveryDriversProvider>
+      <CustomerInfoContext.Provider value={{ customerInfo, setCustomerInfo, currentDriverId }}>
+        <DeliveryDriversProvider initialDrivers={drivers}>
+          <Tabs
+            screenOptions={{
+              header: () => <Header displayName={displayName} />,
+              tabBarActiveTintColor: COLORS.new,
+              tabBarInactiveTintColor: COLORS.inkFaint,
+              tabBarStyle: {
+                borderTopWidth: 1,
+                borderTopColor: COLORS.bgPanelEdge,
+                backgroundColor: COLORS.bgPanel,
+                height: 67 + insets.bottom,
+                paddingBottom: insets.bottom,
+                paddingTop: 8
+              },
+              tabBarLabelStyle: {
+                fontSize: 11,
+                fontWeight: "700",
+                textTransform: "uppercase",
+              },
+            }}
+          >
+            <Tabs.Screen name="index" options={{ title: "Orders", tabBarIcon: ({ color }) => <ReceiptText size={18} color={color} />, }}/>
+            <Tabs.Screen name= "delivery" options={{ title: "Delivery", tabBarIcon: ({ color }) => <Navigation size={18} color={color}/>, }} />
+            <Tabs.Screen name="drivers" options={{ title: "Drivers", tabBarIcon: ({ color }) => <Truck size={18} color={color} />, }}/>
+          </Tabs>
+        </DeliveryDriversProvider>
+      </CustomerInfoContext.Provider>
     </AppResumeContext.Provider>
   );
 }
