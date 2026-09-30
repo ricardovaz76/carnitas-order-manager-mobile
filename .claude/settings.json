@@ -1,5 +1,9 @@
 {
   "enabledPlugins": {
     "expo@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": ["Edit(./src/app/**)", "Edit(./src/components/**)"],
+    "deny": ["Read(./.env*)", "Edit(./package.json)", "Edit(./app.json"]
   }
 }
